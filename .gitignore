@@ -1,0 +1,12 @@
+bin/
+obj/
+/packages/
+/.idea/.idea.ride-hailing-company-api/.idea/.gitignore
+/.idea/.gitignore
+/.idea/.idea.ride-hailing-company-api/.idea/contentModel.xml
+/.idea/.idea.ride-hailing-company-api/.idea/encodings.xml
+/.idea/.idea.ride-hailing-company-api/.idea/indexLayout.xml
+/.idea/.idea.ride-hailing-company-api/.idea/modules.xml
+/.idea/.idea.ride-hailing-company-api/.idea/projectSettingsUpdater.xml
+/.idea/.idea.ride-hailing-company-api/riderModule.iml
+/.idea/.idea.ride-hailing-company-api/.idea/vcs.xml
