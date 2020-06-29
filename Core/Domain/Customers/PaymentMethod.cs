@@ -8,5 +8,15 @@
         public string CVV { get; private set; }
         public string MonthValidity { get; private set; }
         public string YearValidity { get; private set; }
+
+        public PaymentMethod(string cardNumber, string firstName, string lastName, string cvv, string monthValidity, string yearValidity)
+        {
+            CardNumber = cardNumber;
+            FirstName = firstName;
+            LastName = lastName;
+            CVV = cvv;
+            MonthValidity = monthValidity;
+            YearValidity = yearValidity;
+        }
     }
 }

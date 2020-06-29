@@ -5,7 +5,7 @@
         Requested,
         Accepted,
         InProgress,
-        Completed,
+        Finished,
         Canceled
     }
 }

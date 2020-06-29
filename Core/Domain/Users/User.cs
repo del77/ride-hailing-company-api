@@ -16,6 +16,8 @@ namespace Core.Domain.Users
             Login = login;
             Password = password;
             Email = email;
+            
+            Roles = new List<string>();
         }
         
     }

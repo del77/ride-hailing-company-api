@@ -8,11 +8,12 @@ namespace Core.Domain.Drivers
     public class Driver : BaseEntity
     {
         public Guid UserId { get; private set; }
-        public User User { get; private set; }
+        public User User { get; private set; } = null!;
         public IEnumerable<Opinion> Opinions { get; private set; }
 
-        public Driver()
+        public Driver(Guid userId)
         {
+            UserId = userId;
             Opinions = new List<Opinion>();
         }
     }

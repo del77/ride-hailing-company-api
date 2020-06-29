@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Domain.Coupons;
 using Core.Domain.Customers;
 using Core.Domain.Drivers;
 
@@ -7,17 +8,28 @@ namespace Core.Domain.Rides
     public class Ride : BaseEntity
     {
         public Guid DriverId { get; private set; }
-        public Driver Driver { get; private set; }
+        public Driver Driver { get; private set; } = null!;
         
         public Guid CustomerId { get; private set; }
-        public Customer Customer { get; private set; }
+        public Customer Customer { get; private set; } = null!;
         
         public Node Origin { get; private set; }
         public Node Destination { get; private set; }
+
+        public Money? Cost { get; private set; }
         
-        public Money Cost { get; private set; }
+        public Guid? CouponId { get; private set; }
+        public Coupon? Coupon { get; private set; }
         
         public RideStatus Status { get; private set; }
+
+        public Ride(Guid driverId, Guid customerId, Node origin, Node destination, Coupon coupon)
+        {
+            DriverId = driverId;
+            CustomerId = customerId;
+            Origin = origin;
+            Destination = destination;
+        }
 
         public void AssignDriver(Guid driverId)
         {
@@ -42,6 +54,20 @@ namespace Core.Domain.Rides
                 throw new Exception();
 
             Status = RideStatus.InProgress;
+        }
+
+        public void FinishRide(decimal lengthInKilometers, Money pricePerKilometer)
+        {
+            var calculatedCost = new Money(pricePerKilometer.Currency, lengthInKilometers * pricePerKilometer.Value);
+
+            if (Coupon != null)
+            {
+                Coupon.Use();
+                calculatedCost = calculatedCost.DecreaseByPercent(Coupon.DiscountPercent);
+            }
+
+            Cost = calculatedCost;
+            Status = RideStatus.Finished;
         }
     }
 }
