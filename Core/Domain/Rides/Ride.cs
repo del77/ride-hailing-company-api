@@ -5,7 +5,7 @@ using Core.Domain.Drivers;
 
 namespace Core.Domain.Rides
 {
-    public class Ride : BaseEntity
+    public class Ride : BaseEntity, IAggregateRoot
     {
         public Guid DriverId { get; private set; }
         public Driver Driver { get; private set; } = null!;

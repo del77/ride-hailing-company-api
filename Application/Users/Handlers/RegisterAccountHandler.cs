@@ -1,0 +1,41 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Services;
+using Application.Users.Commands;
+using AutoMapper;
+using Core.Domain.Customers;
+using Core.Repositories;
+using MediatR;
+
+namespace Application.Users.Handlers
+{
+    public class RegisterAccountHandler : IRequestHandler<RegisterAccount, string>
+    {
+        private readonly IMapper _mapper;
+        private readonly IIdentityService _identityService;
+        private readonly ICustomersRepository _customersRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public RegisterAccountHandler(IMapper mapper, IIdentityService identityService, ICustomersRepository customersRepository,
+            IUnitOfWork unitOfWork)
+        {
+            _mapper = mapper;
+            _identityService = identityService;
+            _customersRepository = customersRepository;
+            _unitOfWork = unitOfWork;
+        }
+        
+        public async Task<string> Handle(RegisterAccount command, CancellationToken cancellationToken)
+        {
+            var userId = await _identityService.RegisterAsync(command);
+
+            var customer = new Customer(Guid.Parse(userId));
+            await _customersRepository.AddAsync(customer);
+
+            await _unitOfWork.SaveAsync();
+
+            return userId;
+        }
+    }
+}

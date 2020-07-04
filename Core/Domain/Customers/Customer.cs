@@ -4,15 +4,23 @@ using Core.Domain.Rides;
 
 namespace Core.Domain.Customers
 {
-    public class Customer
+    public class Customer : BaseEntity, IAggregateRoot
     {
-        public Guid UserId { get; private set; }
+        public Guid IdentityId { get; private set; }
         public IEnumerable<Ride> Rides { get; private set; }
         
 
-        public Customer()
+        private Customer()
         {
             Rides = new List<Ride>();
+        }
+
+        public Customer(Guid identityId)
+        {
+            if(identityId == Guid.Empty)
+                throw new Exception();
+
+            IdentityId = identityId;
         }
     }
 }

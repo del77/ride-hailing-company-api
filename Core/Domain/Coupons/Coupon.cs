@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Coupons
 {
-    public class Coupon : BaseEntity
+    public class Coupon : BaseEntity, IAggregateRoot
     {
         public decimal DiscountPercent { get; private set; }
         public int CurrentUsesCounter { get; private set; }

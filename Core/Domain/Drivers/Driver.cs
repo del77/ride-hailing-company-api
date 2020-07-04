@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using Core.Domain.Users;
 
 namespace Core.Domain.Drivers
 {
-    public class Driver : BaseEntity
+    public class Driver : BaseEntity, IAggregateRoot
     {
-        public Guid UserId { get; private set; }
-        public User User { get; private set; } = null!;
+        public Guid IdentityId { get; private set; }
         public IEnumerable<Opinion> Opinions { get; private set; }
 
-        public Driver(Guid userId)
+        public Driver(Guid identityId)
         {
-            UserId = userId;
+            IdentityId = identityId;
             Opinions = new List<Opinion>();
         }
     }

@@ -1,6 +1,8 @@
-﻿namespace Core.Domain.Customers
+﻿using System.Collections.Generic;
+
+namespace Core.Domain.Customers
 {
-    public class PaymentMethod : ValueObject
+    public class PaymentMethod : ValueObject<PaymentMethod>
     {
         public string CardNumber { get; private set; }
         public string FirstName { get; private set; }
@@ -17,6 +19,16 @@
             CVV = cvv;
             MonthValidity = monthValidity;
             YearValidity = yearValidity;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return CardNumber;
+            yield return FirstName;
+            yield return LastName;
+            yield return CVV;
+            yield return MonthValidity;
+            yield return YearValidity;
         }
     }
 }
