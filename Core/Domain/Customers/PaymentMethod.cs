@@ -1,34 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Domain.Customers
 {
-    public class PaymentMethod : ValueObject<PaymentMethod>
+    public class PaymentMethod : BaseEntity
     {
-        public string CardNumber { get; private set; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string CVV { get; private set; }
-        public string MonthValidity { get; private set; }
-        public string YearValidity { get; private set; }
+        public string CardId { get; private set; } // payments provider id
+        public string Last4 { get; private set; }
 
-        public PaymentMethod(string cardNumber, string firstName, string lastName, string cvv, string monthValidity, string yearValidity)
-        {
-            CardNumber = cardNumber;
-            FirstName = firstName;
-            LastName = lastName;
-            CVV = cvv;
-            MonthValidity = monthValidity;
-            YearValidity = yearValidity;
-        }
+        public Guid CustomerId { get; set; }
 
-        protected override IEnumerable<object> GetEqualityComponents()
+        public PaymentMethod(string cardId, string last4, Guid customerId)
         {
-            yield return CardNumber;
-            yield return FirstName;
-            yield return LastName;
-            yield return CVV;
-            yield return MonthValidity;
-            yield return YearValidity;
+            CardId = cardId;
+            Last4 = last4;
+            CustomerId = customerId;
         }
     }
 }

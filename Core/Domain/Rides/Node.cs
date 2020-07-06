@@ -1,6 +1,8 @@
-﻿namespace Core.Domain.Rides
+﻿using System.Collections.Generic;
+
+namespace Core.Domain.Rides
 {
-    public class Node
+    public class Node : ValueObject<Node>
     {
         public string Address { get; private set; }
         public decimal Latitude { get; private set; }
@@ -11,6 +13,11 @@
             Address = address;
             Latitude = latitude;
             Longitude = longitude;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Address;
         }
     }
 }

@@ -6,18 +6,19 @@ namespace Core.Domain.Customers
 {
     public class Customer : BaseEntity, IAggregateRoot
     {
-        public Guid IdentityId { get; private set; }
+        public string IdentityId { get; private set; }
         public IEnumerable<Ride> Rides { get; private set; }
-        
+        public IEnumerable<PaymentMethod> PaymentMethods { get; private set; }
 
         private Customer()
         {
             Rides = new List<Ride>();
+            PaymentMethods = new List<PaymentMethod>();
         }
 
-        public Customer(Guid identityId)
+        public Customer(string identityId)
         {
-            if(identityId == Guid.Empty)
+            if(identityId is null)
                 throw new Exception();
 
             IdentityId = identityId;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Domain.Coupons;
 using Core.Domain.Customers;
 using Core.Domain.Drivers;
@@ -22,7 +23,9 @@ namespace Core.Domain.Rides
         public Coupon? Coupon { get; private set; }
         
         public RideStatus Status { get; private set; }
-
+        
+        private Ride() {}
+        
         public Ride(Guid driverId, Guid customerId, Node origin, Node destination, Coupon coupon)
         {
             DriverId = driverId;
@@ -62,7 +65,7 @@ namespace Core.Domain.Rides
 
             if (Coupon != null)
             {
-                Coupon.Use();
+                Coupon.Use(Customer);
                 calculatedCost = calculatedCost.DecreaseByPercent(Coupon.DiscountPercent);
             }
 

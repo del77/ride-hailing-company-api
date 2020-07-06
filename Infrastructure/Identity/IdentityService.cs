@@ -19,7 +19,7 @@ namespace Infrastructure.Identity
         {
             var user = new AppUser
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 UserName = command.Username,
                 Email = command.Email,
             };

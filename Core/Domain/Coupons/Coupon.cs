@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Core.Domain.Customers;
 
 namespace Core.Domain.Coupons
 {
@@ -7,19 +10,30 @@ namespace Core.Domain.Coupons
         public decimal DiscountPercent { get; private set; }
         public int CurrentUsesCounter { get; private set; }
         public int AdmissibleUses { get; private set; }
+        public ICollection<CouponCustomer> CouponUsers { get; private set; }
 
+
+        private Coupon()
+        {
+            CouponUsers = new List<CouponCustomer>();
+        }
+        
         public Coupon(decimal discountPercent, int currentUsesCounter, int admissibleUses)
         {
             SetDiscountPercent(discountPercent);
             SetAdmissibleUses(admissibleUses);
         }
 
-        public void Use()
+        public void Use(Customer customer)
         {
             if(CurrentUsesCounter >= AdmissibleUses)
                 throw new Exception();
+            
+            if(CouponUsers.Any(cu => cu.Customer == customer))
+                throw new Exception("Coupon already used by this user.");
 
             CurrentUsesCounter += 1;
+            CouponUsers.Add(new CouponCustomer(customer));
         }
 
         private void SetDiscountPercent(decimal discountPercent)

@@ -30,7 +30,7 @@ namespace Application.Users.Handlers
         {
             var userId = await _identityService.RegisterAsync(command);
 
-            var customer = new Customer(Guid.Parse(userId));
+            var customer = new Customer(userId);
             await _customersRepository.AddAsync(customer);
 
             await _unitOfWork.SaveAsync();

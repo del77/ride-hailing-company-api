@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Extensions;
+using Core.Settings;
 using Infrastructure.DataAccess;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +31,10 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration.GetSettings<RidesSettings>());
+            services.ConfigureCoreServices();
+            services.ConfigureApplicationServices();
+            
             services.AddDbContext<RideHailingContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("RideHailingConnection")));
             

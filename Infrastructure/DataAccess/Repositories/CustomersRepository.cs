@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Core.Domain.Customers;
 using Core.Repositories;
-using Infrastructure.DataAccess;
 
-namespace Infrastructure.EntityFramework.Repositories
+namespace Infrastructure.DataAccess.Repositories
 {
     public class CustomersRepository : ICustomersRepository
     {
