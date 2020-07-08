@@ -8,10 +8,15 @@ namespace Api.Controllers
     public class AuthController : ApiController
     {
         [HttpPost("register")]
-        public async Task<ActionResult<string>> RegisterAccount(RegisterAccount command)
+        public async Task<ActionResult<string>> RegisterAccount(RegisterAccountCommand command)
         {
             return await Mediator.Send(command);
         }
-        
+
+        [HttpPost("login")]
+        public async Task<ActionResult<string>> Login(LoginCommand command)
+        {
+            return await Mediator.Send(command);                                            
+        }
     }
 }

@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Application.Users.Handlers
 {
-    public class RegisterAccountHandler : IRequestHandler<RegisterAccount, string>
+    public class RegisterAccountHandler : IRequestHandler<RegisterAccountCommand, string>
     {
         private readonly IMapper _mapper;
         private readonly IIdentityService _identityService;
@@ -26,7 +26,7 @@ namespace Application.Users.Handlers
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<string> Handle(RegisterAccount command, CancellationToken cancellationToken)
+        public async Task<string> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
             var userId = await _identityService.RegisterAsync(command);
 

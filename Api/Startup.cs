@@ -1,21 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Api.Extensions;
 using Core.Settings;
 using Infrastructure.DataAccess;
 using Infrastructure.Identity;
+using Infrastructure.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using IdentityDbContext = Infrastructure.Identity.IdentityDbContext;
 
 namespace Api
 {
@@ -32,6 +39,8 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(Configuration.GetSettings<RidesSettings>());
+            services.AddSingleton(Configuration.GetSettings<JwtSettings>());
+            
             services.ConfigureCoreServices();
             services.ConfigureApplicationServices();
             
@@ -41,9 +50,8 @@ namespace Api
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
-            services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<IdentityDbContext>()
-                .AddDefaultTokenProviders();
+            services.ConfigureAuthentication(Configuration);
+            
             
             services.AddControllers();
         }
@@ -59,7 +67,7 @@ namespace Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
