@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Domain;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity
@@ -10,13 +11,13 @@ namespace Infrastructure.Identity
         
         public static async Task SeedAsync(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            await AddRole(roleManager, IdentityConstants.Roles.Admin);
-            await AddRole(roleManager, IdentityConstants.Roles.Customer);
-            await AddRole(roleManager, IdentityConstants.Roles.Driver);
+            await AddRole(roleManager, UserRoles.Admin);
+            await AddRole(roleManager, UserRoles.Customer);
+            await AddRole(roleManager, UserRoles.Driver);
 
-            await AddUser(userManager, "customer", "customer@email.com", new[] {IdentityConstants.Roles.Customer});
-            await AddUser(userManager, "driver", "driver@email.com", new[] {IdentityConstants.Roles.Driver});
-            await AddUser(userManager, "admin", "admin@email.com", new[] {IdentityConstants.Roles.Admin});
+            await AddUser(userManager, "customer", "customer@email.com", new[] {UserRoles.Customer});
+            await AddUser(userManager, "driver", "driver@email.com", new[] {UserRoles.Driver});
+            await AddUser(userManager, "admin", "admin@email.com", new[] {UserRoles.Admin});
         }
 
         private static async Task AddRole(RoleManager<IdentityRole> roleManager, string role)

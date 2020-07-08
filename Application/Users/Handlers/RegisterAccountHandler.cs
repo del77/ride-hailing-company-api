@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Services;
 using Application.Users.Commands;
 using AutoMapper;
+using Core.Domain;
 using Core.Domain.Customers;
 using Core.Repositories;
 using MediatR;
@@ -29,7 +30,7 @@ namespace Application.Users.Handlers
         public async Task<string> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
             var userId = await _identityService.AddUserAsync(command.Username, command.Email, command.Password,
-                new[] {"customer"});
+                new[] {UserRoles.Customer});
 
             var customer = new Customer(userId);
             await _customersRepository.AddAsync(customer);
