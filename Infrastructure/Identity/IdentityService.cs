@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Services;
 using Application.Users.Commands;
@@ -21,16 +22,19 @@ namespace Infrastructure.Identity
             _tokenClaimsService = tokenClaimsService;
         }
         
-        public async Task<string> RegisterAsync(RegisterAccountCommand command)
+        public async Task<string> AddUserAsync(string username, string email, string password, IEnumerable<string> roles)
         {
             var user = new AppUser
             {
                 Id = Guid.NewGuid().ToString(),
-                UserName = command.Username,
-                Email = command.Email,
+                UserName = username,
+                Email = email,
             };
-            await _userManager.CreateAsync(user, command.Password);
-
+            await _userManager.CreateAsync(user, password);
+            
+            if(roles != null)
+                await _userManager.AddToRolesAsync(user, roles);
+            
             return user.Id;
         }
 

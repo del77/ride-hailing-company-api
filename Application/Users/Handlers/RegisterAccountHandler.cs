@@ -28,7 +28,8 @@ namespace Application.Users.Handlers
         
         public async Task<string> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
-            var userId = await _identityService.RegisterAsync(command);
+            var userId = await _identityService.AddUserAsync(command.Username, command.Email, command.Password,
+                new[] {"customer"});
 
             var customer = new Customer(userId);
             await _customersRepository.AddAsync(customer);
