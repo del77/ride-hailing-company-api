@@ -1,7 +1,7 @@
 ## Ride-hailing-company-api
 RESTful API for managing ride-hailing company developed in ASP.NET Core 3.1.
 
-###Tools and patterns
+### Tools and patterns
 - ASP.NET Core Identity (JWT)
 - Entity Framework Core with SQL Server
 - MediatR
@@ -10,7 +10,7 @@ RESTful API for managing ride-hailing company developed in ASP.NET Core 3.1.
 - Domain-Driven Design
 
 
-###Configuration and launch
+### Configuration and launch
 Update `appsettings.json` with connection strings for application data database and identity database and execute the following commands from `Api` folder: 
 ```
 dotnet ef database update --context IdentityDbContext -p ../Infrastructure/Infrastructure.csproj
