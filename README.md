@@ -1,5 +1,5 @@
 ## Ride-hailing-company-api
-RESTful API for managing ride-hailing company developed in ASP.NET Core 3.1.
+RESTful API for managing ride-hailing company. Developed in ASP.NET Core 3.1.
 
 ### Tools and patterns
 - ASP.NET Core Identity (JWT)
