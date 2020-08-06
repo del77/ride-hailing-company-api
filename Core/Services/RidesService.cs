@@ -5,7 +5,7 @@ namespace Core.Services
 {
     public interface IRidesService
     {
-        void FinishRide(Ride ride, int lengthInKilometers);
+        void FinishRide(Ride ride, decimal lengthInKilometers);
     }
     
     public class RidesService : IRidesService
@@ -17,7 +17,7 @@ namespace Core.Services
             _ridesSettings = ridesSettings;
         }
 
-        public void FinishRide(Ride ride, int lengthInKilometers)
+        public void FinishRide(Ride ride, decimal lengthInKilometers)
         {
             ride.FinishRide(lengthInKilometers, _ridesSettings.CostPerKilometer);
         }

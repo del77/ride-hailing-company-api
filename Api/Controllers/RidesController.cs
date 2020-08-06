@@ -18,6 +18,15 @@ namespace Api.Controllers
             
             return CreatedAtAction(nameof(GetById), id);
         }
+        
+        [HttpPatch("{rideId}/cancel")]
+        [Authorize(Roles = UserRoles.Customer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> CancelRequestedRide(CancelRequestedRideCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
 
         [HttpPatch("{rideId}/pick-up-ride")]
         [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -28,18 +37,35 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpPatch("{rideId}/cancel")]
-        [Authorize(Roles = UserRoles.Customer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> CancelRequestedRide(CancelRequestedRideCommand command)
+        [HttpPatch("{rideId}/start-ride")]
+        [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> StartRide(StartRideCommand command)
         {
             await Mediator.Send(command);
 
             return Ok();
         }
-        
+
+        [HttpPatch("{rideId}/finish")]
+        [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> FinishRide(FinishRideCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
+            return Ok();
+        }
+
+        [HttpGet("requested")]
+        [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetRequestedRides()
+        {
+            //todo
             return Ok();
         }
     }

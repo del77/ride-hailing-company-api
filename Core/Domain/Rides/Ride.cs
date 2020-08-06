@@ -27,10 +27,10 @@ namespace Core.Domain.Rides
         
         private Ride() {}
         
-        public Ride(string customerId, string address, decimal latitude, decimal longitude, Coupon? coupon)
+        public Ride(string customerId, string address, decimal originLatitude, decimal origiLongitude, Coupon? coupon)
         {
             CustomerId = customerId;
-            Origin = new Node(address, latitude, longitude);
+            Origin = new Node(address, originLatitude, origiLongitude);
             
             if(coupon != null && !coupon.CanBeUsed(customerId))
                 throw new Exception("Can't create ride with this coupon");
@@ -58,11 +58,12 @@ namespace Core.Domain.Rides
             Status = RideStatus.Canceled;
         }
         
-        public void StartRide()
+        public void StartRide(string address, decimal destinationLatitude, decimal destinationLongitude)
         {
             if(Status != RideStatus.Accepted)
-                throw new Exception(); //todo add exception class
+                throw new InvalidRideStatusException(Status, Id);
 
+            Destination = new Node?(address, destinationLatitude, destinationLongitude);
             Status = RideStatus.InProgress;
         }
 
