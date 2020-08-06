@@ -4,9 +4,9 @@ using Core.Domain.Rides;
 
 namespace Core.Domain.Customers
 {
-    public class Customer : BaseEntity, IAggregateRoot
+    public class Customer : IAggregateRoot
     {
-        public string IdentityId { get; private set; }
+        public string Id { get; private set; }
         public IEnumerable<Ride> Rides { get; private set; }
         public IEnumerable<PaymentMethod> PaymentMethods { get; private set; }
 
@@ -16,12 +16,12 @@ namespace Core.Domain.Customers
             PaymentMethods = new List<PaymentMethod>();
         }
 
-        public Customer(string identityId)
+        public Customer(string id)
         {
-            if(identityId is null)
+            if(id is null)
                 throw new Exception();
 
-            IdentityId = identityId;
+            Id = id;
         }
     }
 }

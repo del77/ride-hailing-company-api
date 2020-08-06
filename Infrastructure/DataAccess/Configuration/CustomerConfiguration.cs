@@ -8,7 +8,7 @@ namespace Infrastructure.DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.Property(c => c.IdentityId)
+            builder.Property(c => c.Id)
                 .IsRequired();
 
             builder.HasMany(c => c.PaymentMethods)

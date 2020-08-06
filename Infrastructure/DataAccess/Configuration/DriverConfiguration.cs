@@ -8,15 +8,14 @@ namespace Infrastructure.DataAccess.Configuration
     {
         public void Configure(EntityTypeBuilder<Driver> builder)
         {
-            builder.Property(d => d.IdentityId)
+            builder.Property(d => d.Id)
                 .IsRequired();
 
             builder.OwnsOne(d => d.Vehicle);
 
             builder.HasMany(d => d.Opinions)
                 .WithOne()
-                .HasForeignKey(d => d.DriverId)
-                .IsRequired();
+                .HasForeignKey(d => d.DriverId);
         }
     }
 }

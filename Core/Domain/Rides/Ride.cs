@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using Core.Domain.Coupons;
 using Core.Domain.Customers;
 using Core.Domain.Drivers;
+using Core.Exceptions;
 
 namespace Core.Domain.Rides
 {
     public class Ride : BaseEntity, IAggregateRoot
     {
-        public Guid DriverId { get; private set; }
-        public Driver Driver { get; private set; } = null!;
+        public string? DriverId { get; private set; }
+        public Driver? Driver { get; private set; } = null!;
         
-        public Guid CustomerId { get; private set; }
+        public string CustomerId { get; private set; }
         public Customer Customer { get; private set; } = null!;
         
         public Node Origin { get; private set; }
-        public Node Destination { get; private set; }
+        public Node? Destination { get; private set; }
 
         public Money? Cost { get; private set; }
         
@@ -26,20 +27,26 @@ namespace Core.Domain.Rides
         
         private Ride() {}
         
-        public Ride(Guid driverId, Guid customerId, Node origin, Node destination, Coupon coupon)
+        public Ride(string customerId, string address, decimal latitude, decimal longitude, Coupon? coupon)
         {
-            DriverId = driverId;
             CustomerId = customerId;
-            Origin = origin;
-            Destination = destination;
-        }
-
-        public void AssignDriver(Guid driverId)
-        {
-            if(Status != RideStatus.Requested)
-                throw new Exception();
+            Origin = new Node(address, latitude, longitude);
             
-            DriverId = driverId;
+            if(coupon != null && !coupon.CanBeUsed(customerId))
+                throw new Exception("Can't create ride with this coupon");
+            
+            Coupon = coupon;
+        }
+        
+        public void AssignDriver(Driver driver)
+        {
+            if(!driver.IsAvailable)
+                throw new DriverUnavailableException(driver.Id);
+
+            if(Status != RideStatus.Requested)
+                throw new InvalidRideStatusException(Status, Id);
+
+            Driver = driver;
             Status = RideStatus.Accepted;
         }
 
@@ -54,7 +61,7 @@ namespace Core.Domain.Rides
         public void StartRide()
         {
             if(Status != RideStatus.Accepted)
-                throw new Exception();
+                throw new Exception(); //todo add exception class
 
             Status = RideStatus.InProgress;
         }
@@ -65,7 +72,7 @@ namespace Core.Domain.Rides
 
             if (Coupon != null)
             {
-                Coupon.Use(Customer);
+                Coupon.Use(CustomerId);
                 calculatedCost = calculatedCost.DecreaseByPercent(Coupon.DiscountPercent);
             }
 

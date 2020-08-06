@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Api.Extensions;
+using Api.Framework;
+using Application.Rides.Validation;
 using Core.Settings;
+using FluentValidation.AspNetCore;
 using Infrastructure.DataAccess;
-using Infrastructure.Identity;
 using Infrastructure.Settings;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using IdentityDbContext = Infrastructure.Identity.IdentityDbContext;
 
 namespace Api
@@ -51,8 +40,13 @@ namespace Api
                 options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
 
             services.ConfigureAuthentication(Configuration);
-            
-            
+
+            services.AddMvc()
+                .AddFluentValidation(fv =>
+                {
+                    fv.RegisterValidatorsFromAssemblyContaining<OrderRideValidator>();
+                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                });
             services.AddControllers();
         }
 
@@ -71,6 +65,7 @@ namespace Api
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }

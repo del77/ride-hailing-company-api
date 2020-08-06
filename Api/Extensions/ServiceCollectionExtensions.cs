@@ -2,6 +2,7 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
+using Core.Factories;
 using Core.Repositories;
 using Core.Services;
 using Infrastructure.DataAccess;
@@ -11,7 +12,6 @@ using Infrastructure.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -23,7 +23,11 @@ namespace Api.Extensions
         public static void ConfigureCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRidesService, RidesService>();
-            
+
+            services.AddScoped<IRidesFactory, RidesFactory>();
+
+            services.AddScoped<IRidesRepository, RidesRepository>();
+            services.AddScoped<ICouponsRepository, CouponsRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
         }
         

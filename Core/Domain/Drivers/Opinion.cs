@@ -4,7 +4,7 @@ namespace Core.Domain.Drivers
 {
     public class Opinion : BaseEntity
     {
-        public Guid DriverId { get; private set; }
+        public string DriverId { get; private set; }
         public int Value { get; private set; }
         public string Description { get; set; }
 

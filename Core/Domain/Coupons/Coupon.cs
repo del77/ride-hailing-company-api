@@ -7,6 +7,7 @@ namespace Core.Domain.Coupons
 {
     public class Coupon : BaseEntity, IAggregateRoot
     {
+        public string Code { get; private set; }
         public decimal DiscountPercent { get; private set; }
         public int CurrentUsesCounter { get; private set; }
         public int AdmissibleUses { get; private set; }
@@ -18,22 +19,30 @@ namespace Core.Domain.Coupons
             CouponUsers = new List<CouponCustomer>();
         }
         
-        public Coupon(decimal discountPercent, int currentUsesCounter, int admissibleUses)
+        public Coupon(string code, decimal discountPercent, int currentUsesCounter, int admissibleUses)
         {
+            Code = code;
             SetDiscountPercent(discountPercent);
             SetAdmissibleUses(admissibleUses);
         }
 
-        public void Use(Customer customer)
+        public void Use(string customerId)
         {
-            if(CurrentUsesCounter >= AdmissibleUses)
-                throw new Exception();
-            
-            if(CouponUsers.Any(cu => cu.Customer == customer))
-                throw new Exception("Coupon already used by this user.");
-
             CurrentUsesCounter += 1;
-            CouponUsers.Add(new CouponCustomer(customer));
+            CouponUsers.Add(new CouponCustomer(customerId));
+        }
+
+        public bool CanBeUsed(string customerId)
+        {
+            var canBeUsed = true;
+
+            if (CurrentUsesCounter >= AdmissibleUses)
+                canBeUsed = false;
+
+            if (CouponUsers.Any(cu => cu.CustomerId == customerId))
+                canBeUsed = false;
+
+            return canBeUsed;
         }
 
         private void SetDiscountPercent(decimal discountPercent)

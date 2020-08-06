@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Users.Commands;
+using Core.Domain.Rides;
+using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

@@ -28,7 +28,11 @@ namespace Infrastructure.Identity
             var key = Encoding.ASCII.GetBytes(_settings.SecretKey);
             var user = await _userManager.FindByNameAsync(userName);
             var roles = await _userManager.GetRolesAsync(user);
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, userName) };
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+            };
             
             foreach(var role in roles)
             {

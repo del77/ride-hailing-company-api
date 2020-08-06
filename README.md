@@ -4,8 +4,9 @@ RESTful API for managing ride-hailing company developed in ASP.NET Core 3.1.
 ###Tools and patterns
 - ASP.NET Core Identity (JWT)
 - Entity Framework Core with SQL Server
-- MediatR
 - Automapper
+- FluentValidation
+- Mediator (with MediatR)
 - Clean architecture
 - Domain-Driven Design
 

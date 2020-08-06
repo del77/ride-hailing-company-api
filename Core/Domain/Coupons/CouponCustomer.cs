@@ -6,7 +6,7 @@ namespace Core.Domain.Coupons
     public class CouponCustomer
     {
         public Customer Customer { get; private set; }
-        public Guid CustomerId { get; private set; }
+        public string CustomerId { get; private set; }
         
         
         public Coupon Coupon { get; private set; }
@@ -16,9 +16,9 @@ namespace Core.Domain.Coupons
         {
         }
         
-        public CouponCustomer(Customer customer)
+        public CouponCustomer(string customerId)
         {
-            Customer = customer;
+            CustomerId = customerId;
         }
     }
 }

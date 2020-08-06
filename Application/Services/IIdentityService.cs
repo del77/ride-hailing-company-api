@@ -8,5 +8,6 @@ namespace Application.Services
     {
         Task<string> AddUserAsync(string username, string email, string password, IEnumerable<string> roles);
         Task<string> LoginAsync(LoginCommand command);
+        Task<string> GetUserIdAsync();
     }
 }

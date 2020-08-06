@@ -8,9 +8,9 @@ namespace Core.Domain.Customers
         public string CardId { get; private set; } // payments provider id
         public string Last4 { get; private set; }
 
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
 
-        public PaymentMethod(string cardId, string last4, Guid customerId)
+        public PaymentMethod(string cardId, string last4, string customerId)
         {
             CardId = cardId;
             Last4 = last4;

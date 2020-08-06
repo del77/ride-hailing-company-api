@@ -16,7 +16,7 @@ namespace Core.Services
         {
             _ridesSettings = ridesSettings;
         }
-        
+
         public void FinishRide(Ride ride, int lengthInKilometers)
         {
             ride.FinishRide(lengthInKilometers, _ridesSettings.CostPerKilometer);
