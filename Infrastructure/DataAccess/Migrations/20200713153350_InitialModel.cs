@@ -12,6 +12,7 @@ namespace Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Code = table.Column<string>(nullable: false),
                     DiscountPercent = table.Column<decimal>(nullable: false),
                     CurrentUsesCounter = table.Column<int>(nullable: false),
                     AdmissibleUses = table.Column<int>(nullable: false)
@@ -25,8 +26,7 @@ namespace Infrastructure.DataAccess.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    IdentityId = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -37,8 +37,7 @@ namespace Infrastructure.DataAccess.Migrations
                 name: "Drivers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    IdentityId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Vehicle_Brand = table.Column<string>(nullable: true),
                     Vehicle_Model = table.Column<string>(nullable: true),
                     Vehicle_Seats = table.Column<int>(nullable: true),
@@ -53,7 +52,7 @@ namespace Infrastructure.DataAccess.Migrations
                 name: "CouponUsers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<Guid>(nullable: false),
+                    CustomerId = table.Column<string>(nullable: false),
                     CouponId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -80,7 +79,7 @@ namespace Infrastructure.DataAccess.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CardId = table.Column<string>(nullable: false),
                     Last4 = table.Column<string>(nullable: false),
-                    CustomerId = table.Column<Guid>(nullable: false)
+                    CustomerId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +97,7 @@ namespace Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: false),
+                    DriverId = table.Column<string>(nullable: false),
                     Value = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false)
                 },
@@ -118,8 +117,8 @@ namespace Infrastructure.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<Guid>(nullable: false),
-                    CustomerId = table.Column<Guid>(nullable: false),
+                    DriverId = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<string>(nullable: false),
                     Origin_Address = table.Column<string>(nullable: true),
                     Origin_Latitude = table.Column<decimal>(nullable: true),
                     Origin_Longitude = table.Column<decimal>(nullable: true),
@@ -151,7 +150,7 @@ namespace Infrastructure.DataAccess.Migrations
                         column: x => x.DriverId,
                         principalTable: "Drivers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
