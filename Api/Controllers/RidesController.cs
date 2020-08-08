@@ -56,9 +56,11 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{rideId}")]
+        public async Task<IActionResult> GetById(GetRideQuery query)
         {
+            var ride = Mediator.Send(query);
+            
             return Ok();
         }
 
