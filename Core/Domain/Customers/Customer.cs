@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Core.Domain.Rides;
+using Core.Exceptions;
 
 namespace Core.Domain.Customers
 {
@@ -18,9 +19,6 @@ namespace Core.Domain.Customers
 
         public Customer(string id)
         {
-            if(id is null)
-                throw new Exception();
-
             Id = id;
         }
     }
