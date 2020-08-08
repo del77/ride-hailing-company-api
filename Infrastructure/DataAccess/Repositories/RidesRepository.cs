@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Rides;
 using Core.Repositories;
+using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repositories
@@ -23,6 +26,13 @@ namespace Infrastructure.DataAccess.Repositories
         public async Task<Ride> GetByIdAsync(Guid rideId)
         {
             return await _hailingContext.Rides.FindAsync(rideId);
+        }
+
+        public async Task<IEnumerable<Ride>> GetAvailableRidesAsync()
+        {
+            return await _hailingContext.Rides
+                .Where(r => r.Status == RideStatus.Requested)
+                .ToListAsync();
         }
     }
 }

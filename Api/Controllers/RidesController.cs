@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Rides.Command;
+using Application.Rides.Queries;
 using Core.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -65,8 +66,9 @@ namespace Api.Controllers
         [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> GetRequestedRides()
         {
-            //todo
-            return Ok();
+            var rides = await Mediator.Send(new GetRequestedRidesQuery());
+            
+            return Ok(rides);
         }
     }
 }
