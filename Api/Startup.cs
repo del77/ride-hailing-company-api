@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Api.Framework;
+using Application.Hubs;
 using Application.Rides.Validation;
 using Core.Settings;
 using FluentValidation.AspNetCore;
@@ -66,7 +67,11 @@ namespace Api
             app.UseAuthorization();
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<RidesHub>("/rides-hub");
+            });
         }
     }
 }
