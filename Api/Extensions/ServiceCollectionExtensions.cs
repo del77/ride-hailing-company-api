@@ -2,6 +2,7 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
+using Core.Domain.Drivers;
 using Core.Factories;
 using Core.Repositories;
 using Core.Services;
@@ -28,12 +29,14 @@ namespace Api.Extensions
 
             services.AddScoped<IRidesRepository, RidesRepository>();
             services.AddScoped<ICouponsRepository, CouponsRepository>();
+            services.AddScoped<IDriversRepository, DriversRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
         }
         
         public static void ConfigureApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.Load(nameof(Application)));
+            services.AddSignalR();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

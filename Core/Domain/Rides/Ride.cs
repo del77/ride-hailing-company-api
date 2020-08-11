@@ -63,7 +63,7 @@ namespace Core.Domain.Rides
             if(Status != RideStatus.Accepted)
                 throw new InvalidRideStatusException(Status, Id);
 
-            Destination = new Node?(address, destinationLatitude, destinationLongitude);
+            Destination = new Node(address, destinationLatitude, destinationLongitude);
             Status = RideStatus.InProgress;
         }
 

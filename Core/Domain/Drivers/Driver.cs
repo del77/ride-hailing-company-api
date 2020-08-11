@@ -14,7 +14,7 @@ namespace Core.Domain.Drivers
         public Vehicle Vehicle { get; private set; }
         public bool IsAvailable => Rides.All(r => r.Status != RideStatus.Accepted && r.Status != RideStatus.InProgress);
         
-        public Driver()
+        private Driver()
         {
             Opinions = new List<Opinion>();
             Rides = new List<Ride>();

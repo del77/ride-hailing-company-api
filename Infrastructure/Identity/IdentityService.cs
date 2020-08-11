@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Services;
 using Application.Users.Commands;
-using Microsoft.AspNetCore.Http;
+using Core.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
@@ -16,12 +17,10 @@ namespace Infrastructure.Identity
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenClaimsService _tokenClaimsService;
-        private readonly HttpContext _httpContext;
         
         public IdentityService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-            ITokenClaimsService tokenClaimsService, IHttpContextAccessor context)
+            ITokenClaimsService tokenClaimsService)
         {
-            _httpContext = context.HttpContext;
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenClaimsService = tokenClaimsService;
@@ -54,11 +53,6 @@ namespace Infrastructure.Identity
             }
 
             return null;
-        }
-
-        public async Task<string> GetUserIdAsync()
-        {
-            return await Task.FromResult(_httpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Core.Factories
         
         public async Task<Ride> CreateRide(string userId, string address, decimal latitude, decimal longitude, string? couponCode)
         {
-            Coupon coupon = null;
+            Coupon? coupon = null;
 
             if (couponCode != null)
             {
