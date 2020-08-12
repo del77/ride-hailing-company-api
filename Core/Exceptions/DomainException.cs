@@ -1,11 +1,10 @@
 ﻿using System;
+using Shared;
 
 namespace Core.Exceptions
 {
-    public abstract class DomainException : Exception
+    public abstract class DomainException : RideHailingException
     {
-        public abstract string Code { get; }
-
         public DomainException(string message) : base(message)
         {
         }

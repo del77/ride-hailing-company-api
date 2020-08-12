@@ -25,6 +25,8 @@ namespace Core.Domain.Rides
         
         public RideStatus Status { get; private set; }
         
+        public byte[] Version { get; set; }
+        
         private Ride() {}
         
         public Ride(string customerId, string address, decimal originLatitude, decimal origiLongitude, Coupon? coupon)

@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Application.Services;
+using Infrastructure.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess
 {
@@ -14,7 +17,14 @@ namespace Infrastructure.DataAccess
         
         public async Task<int> SaveAsync()
         {
-            return await _context.SaveChangesAsync();
+            try
+            {
+                return await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new ConcurrencyException(e);
+            }
         }
     }
 }

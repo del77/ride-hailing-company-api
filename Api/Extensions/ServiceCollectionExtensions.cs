@@ -39,6 +39,7 @@ namespace Api.Extensions
             services.AddSignalR();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IIdentityProvider, IdentityProvider>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
         }

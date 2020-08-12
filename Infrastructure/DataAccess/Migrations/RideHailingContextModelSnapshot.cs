@@ -36,7 +36,7 @@ namespace Infrastructure.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("DiscountPercent")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
@@ -146,6 +146,12 @@ namespace Infrastructure.DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("Version")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CouponId");
@@ -247,7 +253,7 @@ namespace Infrastructure.DataAccess.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<decimal>("Value")
-                                .HasColumnType("decimal(18,2)");
+                                .HasColumnType("decimal(18, 2)");
 
                             b1.HasKey("RideId");
 
@@ -267,10 +273,10 @@ namespace Infrastructure.DataAccess.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<decimal>("Latitude")
-                                .HasColumnType("decimal(18,2)");
+                                .HasColumnType("decimal(18, 2)");
 
                             b1.Property<decimal>("Longitude")
-                                .HasColumnType("decimal(18,2)");
+                                .HasColumnType("decimal(18, 2)");
 
                             b1.HasKey("RideId");
 
@@ -290,10 +296,10 @@ namespace Infrastructure.DataAccess.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<decimal>("Latitude")
-                                .HasColumnType("decimal(18,2)");
+                                .HasColumnType("decimal(18, 2)");
 
                             b1.Property<decimal>("Longitude")
-                                .HasColumnType("decimal(18,2)");
+                                .HasColumnType("decimal(18, 2)");
 
                             b1.HasKey("RideId");
 

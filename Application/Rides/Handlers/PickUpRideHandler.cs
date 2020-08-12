@@ -33,6 +33,8 @@ namespace Application.Rides.Handlers
             var ride = await _ridesRepository.GetByIdAsync(request.RideId);
             
             ride.AssignDriver(driver);
+            
+            ride.Version = request.Version;
             await _unitOfWork.SaveAsync();
         }
     }

@@ -12,7 +12,7 @@ namespace Infrastructure.DataAccess.Configuration
                 .IsRequired();
 
             builder.Property(c => c.DiscountPercent)
-                .IsRequired();
+                .IsRequired().HasColumnType(DatabaseTypes.Decimal);
 
             builder.Property(c => c.CurrentUsesCounter)
                 .IsRequired();
