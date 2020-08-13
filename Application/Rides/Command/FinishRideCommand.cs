@@ -7,6 +7,5 @@ namespace Application.Rides.Command
     {
         public Guid RideId { get; set; }
         public decimal KilometersTraveled { get; set; }
-        public byte[] Version { get; set; }
     }
 }

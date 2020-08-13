@@ -9,6 +9,5 @@ namespace Application.Rides.Command
         public string Address { get; set; }
         public decimal DestinationLatitude { get; set; }
         public decimal DestinationLongitude { get; set; }
-        public byte[] Version { get; set; }
     }
 }

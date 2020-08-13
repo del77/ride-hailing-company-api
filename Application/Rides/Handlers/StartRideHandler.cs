@@ -24,7 +24,6 @@ namespace Application.Rides.Handlers
             
             ride.StartRide(request.Address, request.DestinationLatitude, request.DestinationLongitude);
             
-            ride.Version = request.Version;
             await _unitOfWork.SaveAsync();
         }
     }

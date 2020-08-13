@@ -27,7 +27,6 @@ namespace Application.Rides.Handlers
             
             _ridesService.FinishRide(ride, request.KilometersTraveled);
 
-            ride.Version = request.Version;
             await _unitOfWork.SaveAsync();
         }
     }
