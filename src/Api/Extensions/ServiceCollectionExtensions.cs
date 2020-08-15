@@ -2,7 +2,6 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
-using Core.Factories;
 using Core.Repositories;
 using Core.Services;
 using Infrastructure.DataAccess;
@@ -23,9 +22,7 @@ namespace Api.Extensions
         public static void ConfigureCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IRidesService, RidesService>();
-
-            services.AddScoped<IRidesFactory, RidesFactory>();
-
+            
             services.AddScoped<IRidesRepository, RidesRepository>();
             services.AddScoped<ICouponsRepository, CouponsRepository>();
             services.AddScoped<IDriversRepository, DriversRepository>();
