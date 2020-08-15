@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Rides.Command;
+using Application.Customers.Commands;
 using Application.Services;
 using Core.Repositories;
 using MediatR;
 
-namespace Application.Rides.Handlers
+namespace Application.Customers.Handlers
 {
     public class CancelRequestedRideHandler : AsyncRequestHandler<CancelRequestedRideCommand>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Application.Rides.Command
+namespace Application.Drivers.Commands
 {
     public class PickUpRideCommand : IRequest
     {

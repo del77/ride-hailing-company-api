@@ -1,15 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Customers.Queries;
 using Application.Exceptions;
 using Application.Rides.DTOs;
-using Application.Rides.Queries;
 using Application.Services;
 using AutoMapper;
 using Core.Domain.Rides;
 using Core.Repositories;
 using MediatR;
 
-namespace Application.Rides.Handlers
+namespace Application.Customers.Handlers
 {
     public class GetCurrentRideHandler : IRequestHandler<GetCurrentRideQuery, RideDto>
     {

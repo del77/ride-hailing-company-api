@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Drivers.Queries;
 using Application.Rides.DTOs;
-using Application.Rides.Queries;
 using AutoMapper;
 using Core.Repositories;
 using MediatR;
 
-namespace Application.Rides.Handlers
+namespace Application.Drivers.Handlers
 {
     public class GetRequestedRidesHandler : IRequestHandler<GetRequestedRidesQuery, IEnumerable<AvailableRideDto>>
     {

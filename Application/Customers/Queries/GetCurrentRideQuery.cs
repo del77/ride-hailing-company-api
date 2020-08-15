@@ -2,7 +2,7 @@
 using Application.Rides.DTOs;
 using MediatR;
 
-namespace Application.Rides.Queries
+namespace Application.Customers.Queries
 {
     public class GetCurrentRideQuery : IRequest<RideDto>
     {

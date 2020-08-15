@@ -1,7 +1,7 @@
 using Api.Extensions;
 using Api.Framework;
+using Application.Customers.Validators;
 using Application.Hubs;
-using Application.Rides.Validation;
 using Core.Settings;
 using FluentValidation.AspNetCore;
 using Infrastructure.DataAccess;

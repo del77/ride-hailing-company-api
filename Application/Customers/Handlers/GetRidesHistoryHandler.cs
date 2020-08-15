@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Customers.Queries;
 using Application.Rides.DTOs;
-using Application.Rides.Queries;
 using Core.Repositories;
 using MediatR;
 
-namespace Application.Rides.Handlers
+namespace Application.Customers.Handlers
 {
     public class GetRidesHistoryHandler : IRequestHandler<GetRidesHistoryQuery, IEnumerable<RideDto>>
     {

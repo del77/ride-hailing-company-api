@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace Application.Rides.Command
+namespace Application.Customers.Commands
 {
     public class OrderRideCommand : IRequest<Guid>
     {

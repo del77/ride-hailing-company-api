@@ -1,7 +1,7 @@
-﻿using Application.Rides.Command;
+﻿using Application.Customers.Commands;
 using FluentValidation;
 
-namespace Application.Rides.Validation
+namespace Application.Customers.Validators
 {
     public class OrderRideValidator : AbstractValidator<OrderRideCommand>
     {

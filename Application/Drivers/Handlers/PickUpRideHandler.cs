@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Rides.Command;
+using Application.Drivers.Commands;
 using Application.Services;
 using Core.Repositories;
 using MediatR;
 
-namespace Application.Rides.Handlers
+namespace Application.Drivers.Handlers
 {
     public class PickUpRideHandler : AsyncRequestHandler<PickUpRideCommand>
     {

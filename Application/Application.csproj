@@ -19,7 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Drivers\DTOs" />
       <Folder Include="Users\Validators" />
     </ItemGroup>
 

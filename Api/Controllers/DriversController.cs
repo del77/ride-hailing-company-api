@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Application.Rides.Command;
-using Application.Rides.Queries;
+using Application.Drivers.Commands;
+using Application.Drivers.Queries;
 using Core.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
