@@ -2,6 +2,6 @@
 {
     public static class DatabaseTypes
     {
-        public static string Decimal = "decimal(18, 2)"; 
+        public static string Decimal = "decimal(18, 2)";
     }
 }

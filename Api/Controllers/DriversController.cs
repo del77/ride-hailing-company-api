@@ -15,10 +15,10 @@ namespace Api.Controllers
         public async Task<IActionResult> GetRequestedRides()
         {
             var rides = await Mediator.Send(new GetRequestedRidesQuery());
-            
+
             return Ok(rides);
         }
-        
+
         [HttpPatch("rides/{rideId}/pick-up-ride")]
         public async Task<IActionResult> PickUpRide(PickUpRideCommand command)
         {

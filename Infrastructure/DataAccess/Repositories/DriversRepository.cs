@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Core.Domain.Drivers;
 using Core.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             _context = context;
         }
-        
+
         public async Task<Driver> GetByIdAsync(string id)
         {
             return await _context.Drivers

@@ -7,6 +7,5 @@
         }
 
         public override string Code { get; } = "driver_unavailable";
-
     }
 }

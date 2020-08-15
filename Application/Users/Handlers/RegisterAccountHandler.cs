@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Services;
 using Application.Users.Commands;
@@ -13,12 +12,13 @@ namespace Application.Users.Handlers
 {
     public class RegisterAccountHandler : IRequestHandler<RegisterAccountCommand, string>
     {
-        private readonly IMapper _mapper;
-        private readonly IIdentityService _identityService;
         private readonly ICustomersRepository _customersRepository;
+        private readonly IIdentityService _identityService;
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RegisterAccountHandler(IMapper mapper, IIdentityService identityService, ICustomersRepository customersRepository,
+        public RegisterAccountHandler(IMapper mapper, IIdentityService identityService,
+            ICustomersRepository customersRepository,
             IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
@@ -26,7 +26,7 @@ namespace Application.Users.Handlers
             _customersRepository = customersRepository;
             _unitOfWork = unitOfWork;
         }
-        
+
         public async Task<string> Handle(RegisterAccountCommand command, CancellationToken cancellationToken)
         {
             var userId = await _identityService.AddUserAsync(command.Username, command.Email, command.Password,

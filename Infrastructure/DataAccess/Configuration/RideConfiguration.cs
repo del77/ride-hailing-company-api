@@ -21,17 +21,15 @@ namespace Infrastructure.DataAccess.Configuration
                 node.Property(o => o.Latitude).HasColumnType(DatabaseTypes.Decimal);
                 node.Property(p => p.Longitude).HasColumnType(DatabaseTypes.Decimal);
             });
-            
+
             builder.OwnsOne(r => r.Destination, node =>
             {
                 node.Property(d => d.Latitude).HasColumnType(DatabaseTypes.Decimal);
                 node.Property(d => d.Longitude).HasColumnType(DatabaseTypes.Decimal);
             });
-            
-            builder.OwnsOne(r => r.Cost, money =>
-            {
-                money.Property(m => m.Value).HasColumnType(DatabaseTypes.Decimal);
-            });
+
+            builder.OwnsOne(r => r.Cost,
+                money => { money.Property(m => m.Value).HasColumnType(DatabaseTypes.Decimal); });
 
             builder.HasOne(r => r.Coupon)
                 .WithMany()

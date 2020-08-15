@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using Core.Exceptions;
+using Application.Exceptions;
 using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -17,7 +17,7 @@ namespace Api.Framework
         {
             _next = next;
         }
-        
+
         public async Task Invoke(HttpContext context)
         {
             try
@@ -33,13 +33,16 @@ namespace Api.Framework
 
         private Task HandleExceptionAsync(Exception exception, HttpContext context)
         {
-            var errorCode = exception is RideHailingException hailingException 
-                ? hailingException.Code
-                : "error";
-            var statusCode = HttpStatusCode.BadRequest;
+            var statusCode = exception switch
+            {
+                ConcurrencyException _ => HttpStatusCode.Conflict,
+                ResourceDoesNotExistException _ => HttpStatusCode.NotFound,
+                _ => HttpStatusCode.InternalServerError
+            };
 
-            if (exception is ConcurrencyException)
-                statusCode = HttpStatusCode.Conflict;
+            var errorCode = exception is RideHailingException hailingException
+                ? hailingException.Code
+                : "Something went wrong. Please try again or contact administrator.";
 
             var response = new
             {

@@ -8,7 +8,7 @@ namespace Infrastructure.Exceptions
         public InfrastructureException(string message) : base(message)
         {
         }
-        
+
         public InfrastructureException(string message, Exception e) : base(message, e)
         {
         }

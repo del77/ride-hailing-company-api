@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Application.Services
+﻿namespace Application.Services
 {
     public interface IIdentityProvider
     {

@@ -4,16 +4,16 @@ namespace Core.Domain.Rides
 {
     public class Node : ValueObject<Node>
     {
-        public string Address { get; private set; }
-        public decimal Latitude { get; private set; }
-        public decimal Longitude { get; private set; }
-
         public Node(string address, decimal latitude, decimal longitude)
         {
             Address = address;
             Latitude = latitude;
             Longitude = longitude;
         }
+
+        public string Address { get; }
+        public decimal Latitude { get; }
+        public decimal Longitude { get; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

@@ -3,8 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Rides.Command;
 using Application.Services;
-using Core.Domain.Coupons;
-using Core.Domain.Rides;
 using Core.Factories;
 using Core.Repositories;
 using MediatR;
@@ -13,10 +11,10 @@ namespace Application.Rides.Handlers
 {
     public class OrderRideHandler : IRequestHandler<OrderRideCommand, Guid>
     {
+        private readonly IIdentityProvider _identityProvider;
+        private readonly IRidesFactory _ridesFactory;
         private readonly IRidesRepository _ridesRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRidesFactory _ridesFactory;
-        private readonly IIdentityProvider _identityProvider;
 
         public OrderRideHandler(IRidesRepository ridesRepository,
             IUnitOfWork unitOfWork, IRidesFactory ridesFactory, IIdentityProvider identityProvider)
@@ -31,8 +29,9 @@ namespace Application.Rides.Handlers
         {
             var userId = _identityProvider.GetUserIdAsync();
 
-            var ride = await _ridesFactory.CreateRide(userId, request.Address, request.Latitude, request.Longitude, request.CouponCode);
-            
+            var ride = await _ridesFactory.CreateRide(userId, request.Address, request.Latitude, request.Longitude,
+                request.CouponCode);
+
             await _ridesRepository.AddRideAsync(ride);
             await _unitOfWork.SaveAsync();
 

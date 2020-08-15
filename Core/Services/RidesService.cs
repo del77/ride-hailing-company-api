@@ -7,7 +7,7 @@ namespace Core.Services
     {
         void FinishRide(Ride ride, decimal lengthInKilometers);
     }
-    
+
     public class RidesService : IRidesService
     {
         private readonly RidesSettings _ridesSettings;

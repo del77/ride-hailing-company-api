@@ -9,11 +9,11 @@ namespace Application.Rides.Handlers
 {
     public class PickUpRideHandler : AsyncRequestHandler<PickUpRideCommand>
     {
+        private readonly IDriversRepository _driversRepository;
+        private readonly IIdentityProvider _identityProvider;
         private readonly IIdentityService _identityService;
         private readonly IRidesRepository _ridesRepository;
-        private readonly IDriversRepository _driversRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IIdentityProvider _identityProvider;
 
         public PickUpRideHandler(IIdentityService identityService, IRidesRepository ridesRepository,
             IDriversRepository driversRepository, IUnitOfWork unitOfWork, IIdentityProvider identityProvider)
@@ -31,9 +31,9 @@ namespace Application.Rides.Handlers
 
             var driver = await _driversRepository.GetByIdAsync(userId);
             var ride = await _ridesRepository.GetByIdAsync(request.RideId);
-            
+
             ride.AssignDriver(driver);
-            
+
             ride.Version = request.Version;
             await _unitOfWork.SaveAsync();
         }

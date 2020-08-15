@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Services;
 using Application.Users.Commands;
-using Core.Domain;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Infrastructure.Identity
 {
     public class IdentityService : IIdentityService
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenClaimsService _tokenClaimsService;
-        
+        private readonly UserManager<AppUser> _userManager;
+
         public IdentityService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
             ITokenClaimsService tokenClaimsService)
         {
@@ -25,20 +20,21 @@ namespace Infrastructure.Identity
             _signInManager = signInManager;
             _tokenClaimsService = tokenClaimsService;
         }
-        
-        public async Task<string> AddUserAsync(string username, string email, string password, IEnumerable<string> roles)
+
+        public async Task<string> AddUserAsync(string username, string email, string password,
+            IEnumerable<string> roles)
         {
             var user = new AppUser
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = username,
-                Email = email,
+                Email = email
             };
             await _userManager.CreateAsync(user, password);
-            
-            if(roles != null)
+
+            if (roles != null)
                 await _userManager.AddToRolesAsync(user, roles);
-            
+
             return user.Id;
         }
 

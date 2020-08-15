@@ -1,5 +1,4 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Users.Commands
 {
@@ -9,6 +8,4 @@ namespace Application.Users.Commands
         public string Password { get; set; }
         public string Email { get; set; }
     }
-    
-    
 }

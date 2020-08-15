@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Application.Rides.Command;
+﻿using Application.Rides.Command;
 using FluentValidation;
 
 namespace Application.Rides.Validation

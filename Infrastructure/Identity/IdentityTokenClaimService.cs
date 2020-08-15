@@ -13,15 +13,15 @@ namespace Infrastructure.Identity
 {
     public class IdentityTokenClaimService : ITokenClaimsService
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly JwtSettings _settings;
+        private readonly UserManager<AppUser> _userManager;
 
         public IdentityTokenClaimService(UserManager<AppUser> userManager, JwtSettings settings)
         {
             _userManager = userManager;
             _settings = settings;
         }
-        
+
         public async Task<string> GetTokenAsync(string userName)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -33,17 +33,15 @@ namespace Infrastructure.Identity
                 new Claim(ClaimTypes.Name, userName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
-            
-            foreach(var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+
+            foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
                 Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);

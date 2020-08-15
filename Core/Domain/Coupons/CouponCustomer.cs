@@ -5,20 +5,20 @@ namespace Core.Domain.Coupons
 {
     public class CouponCustomer
     {
-        public Customer Customer { get; private set; } = null!;
-        public string CustomerId { get; private set; }
-
-
-        public Coupon Coupon { get; private set; } = null!;
-        public Guid CouponId { get; private set; }
-
         private CouponCustomer()
         {
         }
-        
+
         public CouponCustomer(string customerId)
         {
             CustomerId = customerId;
         }
+
+        public Customer Customer { get; } = null!;
+        public string CustomerId { get; }
+
+
+        public Coupon Coupon { get; } = null!;
+        public Guid CouponId { get; private set; }
     }
 }

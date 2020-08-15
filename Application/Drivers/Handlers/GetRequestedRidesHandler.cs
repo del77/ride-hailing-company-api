@@ -11,16 +11,17 @@ namespace Application.Rides.Handlers
 {
     public class GetRequestedRidesHandler : IRequestHandler<GetRequestedRidesQuery, IEnumerable<AvailableRideDto>>
     {
-        private readonly IRidesRepository _ridesRepository;
         private readonly IMapper _mapper;
+        private readonly IRidesRepository _ridesRepository;
 
         public GetRequestedRidesHandler(IRidesRepository ridesRepository, IMapper mapper)
         {
             _ridesRepository = ridesRepository;
             _mapper = mapper;
         }
-        
-        public async Task<IEnumerable<AvailableRideDto>> Handle(GetRequestedRidesQuery request, CancellationToken cancellationToken)
+
+        public async Task<IEnumerable<AvailableRideDto>> Handle(GetRequestedRidesQuery request,
+            CancellationToken cancellationToken)
         {
             var rides = await _ridesRepository.GetAvailableRidesAsync();
 

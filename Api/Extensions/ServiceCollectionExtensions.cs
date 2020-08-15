@@ -2,7 +2,6 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
-using Core.Domain.Drivers;
 using Core.Factories;
 using Core.Repositories;
 using Core.Services;
@@ -32,7 +31,7 @@ namespace Api.Extensions
             services.AddScoped<IDriversRepository, DriversRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
         }
-        
+
         public static void ConfigureApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.Load(nameof(Application)));
@@ -66,9 +65,9 @@ namespace Api.Extensions
                         ValidateAudience = false
                     };
                 });
-            
+
             services.AddIdentity<AppUser, IdentityRole>()
-                .AddEntityFrameworkStores<Infrastructure.Identity.IdentityDbContext>()
+                .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
         }
     }

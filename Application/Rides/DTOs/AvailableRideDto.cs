@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Domain.Rides;
 
 namespace Application.Rides.DTOs
 {

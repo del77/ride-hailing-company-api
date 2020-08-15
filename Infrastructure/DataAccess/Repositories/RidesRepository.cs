@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Rides;
 using Core.Repositories;
-using Core.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repositories
@@ -17,7 +16,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             _hailingContext = hailingContext;
         }
-        
+
         public async Task AddRideAsync(Ride ride)
         {
             await _hailingContext.Rides.AddAsync(ride);
@@ -33,6 +32,15 @@ namespace Infrastructure.DataAccess.Repositories
             return await _hailingContext.Rides
                 .Where(r => r.Status == RideStatus.Requested)
                 .ToListAsync();
+        }
+
+        public async Task<Ride> GetCurrentCustomerRideAsync(string getUserIdAsync)
+        {
+            return await _hailingContext.Rides
+                .Where(r => r.CustomerId == getUserIdAsync &&
+                            (r.Status == RideStatus.Requested || r.Status == RideStatus.Accepted ||
+                             r.Status == RideStatus.InProgress))
+                .SingleOrDefaultAsync();
         }
     }
 }

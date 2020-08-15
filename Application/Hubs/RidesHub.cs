@@ -11,20 +11,19 @@ namespace Application.Hubs
 {
     public class RidesHub : Hub
     {
-        private readonly IIdentityProvider _identityProvider;
-        private readonly IRidesRepository _ridesRepository;
-
         private const string UpdateRide = "updateRide";
         private const string RefreshRidesList = "refreshRidesList";
+        private readonly IIdentityProvider _identityProvider;
+        private readonly IRidesRepository _ridesRepository;
 
         public RidesHub(IIdentityProvider identityProvider, IRidesRepository ridesRepository)
         {
             _identityProvider = identityProvider;
             _ridesRepository = ridesRepository;
         }
-        
+
         /// <summary>
-        /// When customer creates or cancels ride, notify all drivers.
+        ///     When customer creates or cancels ride, notify all drivers.
         /// </summary>
         [Authorize(Roles = UserRoles.Customer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task OnRideRequestedOrCanceledByCustomer()
@@ -33,7 +32,7 @@ namespace Application.Hubs
         }
 
         /// <summary>
-        /// When driver accepts requested Ride, notify all drivers and customer.
+        ///     When driver accepts requested Ride, notify all drivers and customer.
         /// </summary>
         /// <param name="rideId"></param>
         [Authorize(Roles = UserRoles.Driver, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -45,7 +44,7 @@ namespace Application.Hubs
         }
 
         /// <summary>
-        /// When driver starts or finishes ride, notify customer.
+        ///     When driver starts or finishes ride, notify customer.
         /// </summary>
         /// <param name="rideId"></param>
         /// <returns></returns>
@@ -53,16 +52,16 @@ namespace Application.Hubs
         public async Task OnRideStartedOrFinishedByDriver(Guid rideId)
         {
             var ride = await _ridesRepository.GetByIdAsync(rideId);
-            
+
             await Clients.Group(ride.CustomerId).SendAsync(UpdateRide, rideId);
         }
-        
-        
+
+
         public override Task OnConnectedAsync()
         {
             Groups.AddToGroupAsync(Context.ConnectionId, _identityProvider.GetRole());
             Groups.AddToGroupAsync(Context.ConnectionId, _identityProvider.GetUserIdAsync());
-            
+
             return base.OnConnectedAsync();
         }
     }

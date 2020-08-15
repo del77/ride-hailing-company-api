@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Domain.Rides;
 using MediatR;
 
 namespace Application.Rides.Command

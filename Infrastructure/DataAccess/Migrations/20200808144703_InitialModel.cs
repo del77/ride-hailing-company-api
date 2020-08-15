@@ -8,117 +8,108 @@ namespace Infrastructure.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Coupons",
-                columns: table => new
+                "Coupons",
+                table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Code = table.Column<string>(nullable: false),
-                    DiscountPercent = table.Column<decimal>(nullable: false),
-                    CurrentUsesCounter = table.Column<int>(nullable: false),
-                    AdmissibleUses = table.Column<int>(nullable: false)
+                    Id = table.Column<Guid>(),
+                    Code = table.Column<string>(),
+                    DiscountPercent = table.Column<decimal>(),
+                    CurrentUsesCounter = table.Column<int>(),
+                    AdmissibleUses = table.Column<int>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Coupons", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Coupons", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
-                columns: table => new
+                "Customers",
+                table => new
                 {
-                    Id = table.Column<string>(nullable: false)
+                    Id = table.Column<string>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Customers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "Drivers",
-                columns: table => new
+                "Drivers",
+                table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(),
                     Vehicle_Brand = table.Column<string>(nullable: true),
                     Vehicle_Model = table.Column<string>(nullable: true),
                     Vehicle_Seats = table.Column<int>(nullable: true),
                     Vehicle_RegistrationNumber = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Drivers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Drivers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "CouponUsers",
-                columns: table => new
+                "CouponUsers",
+                table => new
                 {
-                    CustomerId = table.Column<string>(nullable: false),
-                    CouponId = table.Column<Guid>(nullable: false)
+                    CustomerId = table.Column<string>(),
+                    CouponId = table.Column<Guid>()
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CouponUsers", x => new { x.CouponId, x.CustomerId });
+                    table.PrimaryKey("PK_CouponUsers", x => new {x.CouponId, x.CustomerId});
                     table.ForeignKey(
-                        name: "FK_CouponUsers_Coupons_CouponId",
-                        column: x => x.CouponId,
-                        principalTable: "Coupons",
-                        principalColumn: "Id",
+                        "FK_CouponUsers_Coupons_CouponId",
+                        x => x.CouponId,
+                        "Coupons",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CouponUsers_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
+                        "FK_CouponUsers_Customers_CustomerId",
+                        x => x.CustomerId,
+                        "Customers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PaymentMethods",
-                columns: table => new
+                "PaymentMethods",
+                table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    CardId = table.Column<string>(nullable: false),
-                    Last4 = table.Column<string>(nullable: false),
-                    CustomerId = table.Column<string>(nullable: false)
+                    Id = table.Column<Guid>(),
+                    CardId = table.Column<string>(),
+                    Last4 = table.Column<string>(),
+                    CustomerId = table.Column<string>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PaymentMethods", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PaymentMethods_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
+                        "FK_PaymentMethods_Customers_CustomerId",
+                        x => x.CustomerId,
+                        "Customers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Opinions",
-                columns: table => new
+                "Opinions",
+                table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    DriverId = table.Column<string>(nullable: false),
-                    Value = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Id = table.Column<Guid>(),
+                    DriverId = table.Column<string>(),
+                    Value = table.Column<int>(),
+                    Description = table.Column<string>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Opinions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Opinions_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "Id",
+                        "FK_Opinions_Drivers_DriverId",
+                        x => x.DriverId,
+                        "Drivers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rides",
-                columns: table => new
+                "Rides",
+                table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(),
                     DriverId = table.Column<string>(nullable: true),
-                    CustomerId = table.Column<string>(nullable: false),
+                    CustomerId = table.Column<string>(),
                     Origin_Address = table.Column<string>(nullable: true),
                     Origin_Latitude = table.Column<decimal>(nullable: true),
                     Origin_Longitude = table.Column<decimal>(nullable: true),
@@ -128,84 +119,84 @@ namespace Infrastructure.DataAccess.Migrations
                     Cost_Currency = table.Column<string>(nullable: true),
                     Cost_Value = table.Column<decimal>(nullable: true),
                     CouponId = table.Column<Guid>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rides", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Rides_Coupons_CouponId",
-                        column: x => x.CouponId,
-                        principalTable: "Coupons",
-                        principalColumn: "Id",
+                        "FK_Rides_Coupons_CouponId",
+                        x => x.CouponId,
+                        "Coupons",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Rides_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
+                        "FK_Rides_Customers_CustomerId",
+                        x => x.CustomerId,
+                        "Customers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rides_Drivers_DriverId",
-                        column: x => x.DriverId,
-                        principalTable: "Drivers",
-                        principalColumn: "Id",
+                        "FK_Rides_Drivers_DriverId",
+                        x => x.DriverId,
+                        "Drivers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CouponUsers_CustomerId",
-                table: "CouponUsers",
-                column: "CustomerId");
+                "IX_CouponUsers_CustomerId",
+                "CouponUsers",
+                "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Opinions_DriverId",
-                table: "Opinions",
-                column: "DriverId");
+                "IX_Opinions_DriverId",
+                "Opinions",
+                "DriverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentMethods_CustomerId",
-                table: "PaymentMethods",
-                column: "CustomerId");
+                "IX_PaymentMethods_CustomerId",
+                "PaymentMethods",
+                "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rides_CouponId",
-                table: "Rides",
-                column: "CouponId");
+                "IX_Rides_CouponId",
+                "Rides",
+                "CouponId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rides_CustomerId",
-                table: "Rides",
-                column: "CustomerId");
+                "IX_Rides_CustomerId",
+                "Rides",
+                "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rides_DriverId",
-                table: "Rides",
-                column: "DriverId");
+                "IX_Rides_DriverId",
+                "Rides",
+                "DriverId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CouponUsers");
+                "CouponUsers");
 
             migrationBuilder.DropTable(
-                name: "Opinions");
+                "Opinions");
 
             migrationBuilder.DropTable(
-                name: "PaymentMethods");
+                "PaymentMethods");
 
             migrationBuilder.DropTable(
-                name: "Rides");
+                "Rides");
 
             migrationBuilder.DropTable(
-                name: "Coupons");
+                "Coupons");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                "Customers");
 
             migrationBuilder.DropTable(
-                name: "Drivers");
+                "Drivers");
         }
     }
 }

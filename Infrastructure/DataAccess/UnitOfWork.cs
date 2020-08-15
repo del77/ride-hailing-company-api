@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Services;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,7 @@ namespace Infrastructure.DataAccess
         {
             _context = context;
         }
-        
+
         public async Task<int> SaveAsync()
         {
             try

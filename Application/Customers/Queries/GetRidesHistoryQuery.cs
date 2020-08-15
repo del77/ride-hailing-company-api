@@ -4,8 +4,7 @@ using MediatR;
 
 namespace Application.Rides.Queries
 {
-    public class GetRequestedRidesQuery : IRequest<IEnumerable<AvailableRideDto>>
+    public class GetRidesHistoryQuery : IRequest<IEnumerable<RideDto>>
     {
-        
     }
 }

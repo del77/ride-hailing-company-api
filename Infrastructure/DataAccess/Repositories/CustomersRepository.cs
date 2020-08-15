@@ -12,7 +12,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             _context = context;
         }
-        
+
         public async Task AddAsync(Customer customer)
         {
             await _context.AddAsync(customer);

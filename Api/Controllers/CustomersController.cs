@@ -11,22 +11,30 @@ namespace Api.Controllers
     [Authorize(Roles = UserRoles.Customer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomersController : ApiController
     {
-        [HttpGet("{rideId}")]
-        public async Task<IActionResult> GetById(GetRideQuery query)
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentRide(GetCurrentRideQuery query)
         {
-            var ride = Mediator.Send(query);
-            
-            return Ok();
+            var ride = await Mediator.Send(query);
+
+            return Ok(ride);
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> GetRidesHistory(GetRidesHistoryQuery query)
+        {
+            var rides = await Mediator.Send(query);
+
+            return Ok(rides);
+        }
+
         [HttpPost]
         public async Task<IActionResult> OrderRide(OrderRideCommand command)
         {
             var id = await Mediator.Send(command);
-            
-            return CreatedAtAction(nameof(GetById), id);
+
+            return CreatedAtAction(nameof(GetCurrentRide), null);
         }
-        
+
         [HttpPatch("rides/{rideId}/cancel")]
         public async Task<IActionResult> CancelRequestedRide(CancelRequestedRideCommand command)
         {

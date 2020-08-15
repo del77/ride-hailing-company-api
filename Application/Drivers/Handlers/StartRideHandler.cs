@@ -7,23 +7,23 @@ using MediatR;
 
 namespace Application.Rides.Handlers
 {
-    public class CancelRequestedRideHandler : AsyncRequestHandler<CancelRequestedRideCommand>
+    public class StartRideHandler : AsyncRequestHandler<StartRideCommand>
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IRidesRepository _ridesRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CancelRequestedRideHandler(IUnitOfWork unitOfWork, IRidesRepository ridesRepository)
+        public StartRideHandler(IUnitOfWork unitOfWork, IRidesRepository ridesRepository)
         {
             _unitOfWork = unitOfWork;
             _ridesRepository = ridesRepository;
         }
-        
-        protected override async Task Handle(CancelRequestedRideCommand request, CancellationToken cancellationToken)
+
+        protected override async Task Handle(StartRideCommand request, CancellationToken cancellationToken)
         {
             var ride = await _ridesRepository.GetByIdAsync(request.RideId);
-            ride.Cancel();
 
-            ride.Version = request.Version;
+            ride.StartRide(request.Address, request.DestinationLatitude, request.DestinationLongitude);
+
             await _unitOfWork.SaveAsync();
         }
     }

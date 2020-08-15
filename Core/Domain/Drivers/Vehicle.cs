@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Core.Domain.Drivers
 {
     public class Vehicle : ValueObject<Vehicle>
     {
-        public string Brand { get; private set; }
-        public string Model { get; private set; }
-        public int Seats { get; private set; }
-        public string RegistrationNumber { get; private set; }
-
         public Vehicle(string registrationNumber, string brand, string model, int seats)
         {
             RegistrationNumber = registrationNumber;
@@ -17,6 +11,11 @@ namespace Core.Domain.Drivers
             Model = model;
             Seats = seats;
         }
+
+        public string Brand { get; }
+        public string Model { get; }
+        public int Seats { get; }
+        public string RegistrationNumber { get; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

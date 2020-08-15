@@ -5,23 +5,15 @@ using System.Linq.Expressions;
 namespace Core.Specifications
 {
     /// <summary>
-    /// https://github.com/vkhorikov/SpecPattern
+    ///     https://github.com/vkhorikov/SpecPattern
     /// </summary>
     public abstract class Specification<T>
     {
-        internal sealed class IdentitySpecification<T> : Specification<T>
-        {
-            public override Expression<Func<T, bool>> ToExpression()
-            {
-                return x => true;
-            }
-        }
-        
         public static readonly Specification<T> All = new IdentitySpecification<T>();
 
         public bool IsSatisfiedBy(T entity)
         {
-            Func<T, bool> predicate = ToExpression().Compile();
+            var predicate = ToExpression().Compile();
             return predicate(entity);
         }
 
@@ -49,6 +41,14 @@ namespace Core.Specifications
         {
             return new NotSpecification<T>(this);
         }
+
+        internal sealed class IdentitySpecification<T> : Specification<T>
+        {
+            public override Expression<Func<T, bool>> ToExpression()
+            {
+                return x => true;
+            }
+        }
     }
 
     internal sealed class AndSpecification<T> : Specification<T>
@@ -64,12 +64,13 @@ namespace Core.Specifications
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            var leftExpression = _left.ToExpression();
+            var rightExpression = _right.ToExpression();
 
             var invokedExpression = Expression.Invoke(rightExpression, leftExpression.Parameters);
 
-            return (Expression<Func<T, Boolean>>)Expression.Lambda(Expression.AndAlso(leftExpression.Body, invokedExpression), leftExpression.Parameters);
+            return (Expression<Func<T, bool>>) Expression.Lambda(
+                Expression.AndAlso(leftExpression.Body, invokedExpression), leftExpression.Parameters);
         }
     }
 
@@ -86,12 +87,13 @@ namespace Core.Specifications
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> leftExpression = _left.ToExpression();
-            Expression<Func<T, bool>> rightExpression = _right.ToExpression();
+            var leftExpression = _left.ToExpression();
+            var rightExpression = _right.ToExpression();
 
             var invokedExpression = Expression.Invoke(rightExpression, leftExpression.Parameters);
 
-            return (Expression<Func<T, Boolean>>)Expression.Lambda(Expression.OrElse(leftExpression.Body, invokedExpression), leftExpression.Parameters);
+            return (Expression<Func<T, bool>>) Expression.Lambda(
+                Expression.OrElse(leftExpression.Body, invokedExpression), leftExpression.Parameters);
         }
     }
 
@@ -106,8 +108,8 @@ namespace Core.Specifications
 
         public override Expression<Func<T, bool>> ToExpression()
         {
-            Expression<Func<T, bool>> expression = _specification.ToExpression();
-            UnaryExpression notExpression = Expression.Not(expression.Body);
+            var expression = _specification.ToExpression();
+            var notExpression = Expression.Not(expression.Body);
 
             return Expression.Lambda<Func<T, bool>>(notExpression, expression.Parameters.Single());
         }

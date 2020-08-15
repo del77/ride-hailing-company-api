@@ -15,12 +15,12 @@ namespace Application.Users.Handlers
         {
             _identityService = identityService;
         }
-        
+
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var token = await _identityService.LoginAsync(request);
-            
-            if(token is null)
+
+            if (token is null)
                 throw new Exception("invalid username or password");
 
             return token;

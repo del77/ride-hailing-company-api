@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.DataAccess.Migrations
 {
@@ -8,17 +7,16 @@ namespace Infrastructure.DataAccess.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<byte[]>(
-                name: "Version",
-                table: "Rides",
-                rowVersion: true,
-                nullable: false);
+                "Version",
+                "Rides",
+                rowVersion: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Version",
-                table: "Rides");
+                "Version",
+                "Rides");
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.Users.Commands;
-using Core.Domain.Rides;
-using Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -18,7 +15,7 @@ namespace Api.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginCommand command)
         {
-            return await Mediator.Send(command);                                            
+            return await Mediator.Send(command);
         }
     }
 }

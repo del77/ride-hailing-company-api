@@ -13,7 +13,7 @@ namespace Infrastructure.DataAccess.Repositories
         {
             _context = context;
         }
-        
+
         public async Task<Coupon> GetByCodeAsync(string code)
         {
             return await _context.Coupons

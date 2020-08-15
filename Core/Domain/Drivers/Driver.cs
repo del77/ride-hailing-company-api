@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Core.Domain.Rides;
-using Core.Exceptions;
 
 namespace Core.Domain.Drivers
 {
     public class Driver : IAggregateRoot
     {
-        public string Id { get; private set; }
-        public IEnumerable<Opinion> Opinions { get; private set; }
-        public IEnumerable<Ride> Rides { get; private set; }
-        public Vehicle Vehicle { get; private set; }
-        public bool IsAvailable => Rides.All(r => r.Status != RideStatus.Accepted && r.Status != RideStatus.InProgress);
-        
         private Driver()
         {
             Opinions = new List<Opinion>();
@@ -25,5 +17,11 @@ namespace Core.Domain.Drivers
             Id = id;
             Vehicle = new Vehicle("123", "ford", "mustang", 4);
         }
+
+        public string Id { get; }
+        public IEnumerable<Opinion> Opinions { get; }
+        public IEnumerable<Ride> Rides { get; }
+        public Vehicle Vehicle { get; }
+        public bool IsAvailable => Rides.All(r => r.Status != RideStatus.Accepted && r.Status != RideStatus.InProgress);
     }
 }
