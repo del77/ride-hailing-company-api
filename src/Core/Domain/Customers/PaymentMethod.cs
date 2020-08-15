@@ -13,5 +13,6 @@
         public string Last4 { get; }
 
         public string CustomerId { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

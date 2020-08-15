@@ -12,13 +12,16 @@ namespace Application.Drivers.Handlers
     {
         private readonly IRidesRepository _ridesRepository;
         private readonly IRidesService _ridesService;
+        private readonly IMediator _mediator;
         private readonly IUnitOfWork _unitOfWork;
 
-        public FinishRideHandler(IUnitOfWork unitOfWork, IRidesRepository ridesRepository, IRidesService ridesService)
+        public FinishRideHandler(IUnitOfWork unitOfWork, IRidesRepository ridesRepository, IRidesService ridesService,
+            IMediator mediator)
         {
             _unitOfWork = unitOfWork;
             _ridesRepository = ridesRepository;
             _ridesService = ridesService;
+            _mediator = mediator;
         }
 
         protected override async Task Handle(FinishRideCommand request, CancellationToken cancellationToken)
@@ -27,7 +30,7 @@ namespace Application.Drivers.Handlers
 
             _ridesService.FinishRide(ride, request.KilometersTraveled);
 
-            await _unitOfWork.SaveAsync();
+            await _mediator.Publish(new RideFinishedNotification(ride.Id));
         }
     }
 }

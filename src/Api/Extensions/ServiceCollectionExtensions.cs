@@ -2,11 +2,13 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
+using Core.Interfaces;
 using Core.Repositories;
 using Core.Services;
 using Infrastructure.DataAccess;
 using Infrastructure.DataAccess.Repositories;
 using Infrastructure.Identity;
+using Infrastructure.Payments;
 using Infrastructure.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -27,6 +29,8 @@ namespace Api.Extensions
             services.AddScoped<ICouponsRepository, CouponsRepository>();
             services.AddScoped<IDriversRepository, DriversRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
+            
+            services.AddScoped<IPaymentService, SomePaymentService>();
         }
 
         public static void ConfigureApplicationServices(this IServiceCollection services)

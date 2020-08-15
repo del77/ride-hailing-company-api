@@ -24,7 +24,10 @@ namespace Infrastructure.DataAccess.Repositories
 
         public async Task<Ride> GetByIdAsync(Guid rideId)
         {
-            return await _hailingContext.Rides.FindAsync(rideId);
+            return await _hailingContext.Rides
+                .Include(r => r.Customer)
+                .Include(r => r.Coupon)
+                .FirstOrDefaultAsync(r => r.Id == rideId);
         }
 
         public async Task<IEnumerable<Ride>> GetAvailableRidesAsync()
