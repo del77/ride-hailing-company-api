@@ -12,15 +12,10 @@ namespace Core.Domain.Rides
         {
         }
 
-        public Ride(string customerId, string address, decimal originLatitude, decimal origiLongitude, Coupon? coupon)
+        public Ride(string customerId, string address, decimal originLatitude, decimal originLongitude)
         {
             CustomerId = customerId;
-            Origin = new Node(address, originLatitude, origiLongitude);
-
-            if (coupon != null && !coupon.CanBeUsed(customerId))
-                throw new Exception("Can't create ride with this coupon");
-
-            Coupon = coupon;
+            Origin = new Node(address, originLatitude, originLongitude);
         }
 
         public string? DriverId { get; private set; }
@@ -73,12 +68,6 @@ namespace Core.Domain.Rides
         public void FinishRide(decimal lengthInKilometers, Money pricePerKilometer)
         {
             var calculatedCost = new Money(pricePerKilometer.Currency, lengthInKilometers * pricePerKilometer.Value);
-
-            if (Coupon != null)
-            {
-                Coupon.Use(CustomerId);
-                calculatedCost = calculatedCost.DecreaseByPercent(Coupon.DiscountPercent);
-            }
 
             Cost = calculatedCost;
             Status = RideStatus.Finished;

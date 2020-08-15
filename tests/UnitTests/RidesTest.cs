@@ -3,10 +3,10 @@ using Xunit;
 
 namespace UnitTests
 {
-    public class UnitTest1
+    public class RidesTest
     {
         [Fact]
-        public void Test1()
+        public void Should_()
         {
         }
     }

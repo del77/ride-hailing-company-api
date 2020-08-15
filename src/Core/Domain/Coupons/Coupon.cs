@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Exceptions;
 
 namespace Core.Domain.Coupons
 {
@@ -11,9 +12,10 @@ namespace Core.Domain.Coupons
             CouponUsers = new List<CouponCustomer>();
         }
 
-        public Coupon(string code, decimal discountPercent, int currentUsesCounter, int admissibleUses)
+        public Coupon(string code, decimal discountPercent, int currentUsesCounter, int admissibleUses) : this()
         {
             Code = code;
+            SetCurrentUsesCounter(currentUsesCounter);
             SetDiscountPercent(discountPercent);
             SetAdmissibleUses(admissibleUses);
         }
@@ -26,6 +28,12 @@ namespace Core.Domain.Coupons
 
         public void Use(string customerId)
         {
+            if (IsUsesQuotaReached)
+                throw new CouponAdmissibleUsesCountReachedException(Id, AdmissibleUses);
+            
+            if(IsCouponAlreadyUsedByCustomer(customerId))
+                throw new CouponAlreadyUsedByCustomerException(customerId, Id);
+
             CurrentUsesCounter += 1;
             CouponUsers.Add(new CouponCustomer(customerId));
         }
@@ -43,6 +51,17 @@ namespace Core.Domain.Coupons
             return canBeUsed;
         }
 
+        private bool IsUsesQuotaReached => CurrentUsesCounter >= AdmissibleUses;
+        private bool IsCouponAlreadyUsedByCustomer(string customerId) => CouponUsers.Any(cu => cu.CustomerId == customerId);
+
+        private void SetCurrentUsesCounter(int currentUsesCounter)
+        {
+            if (currentUsesCounter < 0)
+                throw new Exception();
+
+            CurrentUsesCounter = currentUsesCounter;
+        }
+        
         private void SetDiscountPercent(decimal discountPercent)
         {
             if (discountPercent <= 0 || discountPercent > 100)
