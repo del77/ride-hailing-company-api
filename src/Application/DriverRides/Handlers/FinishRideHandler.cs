@@ -1,5 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.CustomerRides.Commands;
+using Application.CustomerRides.Handlers;
 using Application.DriverRides.Commands;
 using Application.Services;
 using Core.Repositories;

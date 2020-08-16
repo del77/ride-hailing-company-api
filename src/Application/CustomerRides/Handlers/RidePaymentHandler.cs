@@ -7,25 +7,15 @@ using Core.Repositories;
 using Core.Services;
 using MediatR;
 
-namespace Application
-{
-    public class RideFinishedNotification : INotification
-    {
-        public RideFinishedNotification(Guid rideId)
-        {
-            RideId = rideId;
-        }
-        
-        public Guid RideId { get; set; }
-    }
-    
-    public class RidePaymentsHandler : INotificationHandler<RideFinishedNotification>
+namespace Application.CustomerRides.Handlers
+{    
+    public class RidePaymentHandler : INotificationHandler<RideFinishedNotification>
     {
         private readonly IRidesService _ridesService;
         private readonly IRidesRepository _ridesRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public RidePaymentsHandler(IRidesService ridesService, IRidesRepository ridesRepository, IUnitOfWork unitOfWork)
+        public RidePaymentHandler(IRidesService ridesService, IRidesRepository ridesRepository, IUnitOfWork unitOfWork)
         {
             _ridesService = ridesService;
             _ridesRepository = ridesRepository;
