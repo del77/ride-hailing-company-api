@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Domain.Coupons;
 using Core.Domain.Rides;
@@ -25,9 +26,15 @@ namespace Core.Factories
         
         public async Task<Ride> CreateRideAsync(string customerId, string address, decimal latitude, decimal longitude, string? couponCode)
         {
-            var existsUnpaidRideForCustomer = await _customersRepository.ExistsUnpaidRideForCustomerAsync(customerId);
+            var customer = await _customersRepository.GetAsync(customerId);
+
+            var existsUnpaidRideForCustomer = customer.Rides.Any(r => !r.IsPaid);
             if(existsUnpaidRideForCustomer)
                 throw new ExistsUnpaidRideException(customerId);
+
+            var customerDoesNotHavePaymentMethod = !customer.PaymentMethods.Any();
+            if(customerDoesNotHavePaymentMethod)
+                throw new NoPaymentMethodException(customerId);
             
             Coupon? coupon = null;
             if (couponCode != null)

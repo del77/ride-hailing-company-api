@@ -11,30 +11,6 @@ namespace Api.Controllers
     [Authorize(Roles = UserRoles.Customer, AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CustomersController : ApiController
     {
-        [HttpGet("rides/current")]
-        public async Task<IActionResult> GetCurrentRide()
-        {
-            var ride = await Mediator.Send(new GetCurrentRideQuery());
-
-            return Ok(ride);
-        }
-
-        [HttpGet("rides/history")]
-        public async Task<IActionResult> GetRidesHistory()
-        {
-            var rides = await Mediator.Send(new GetRidesHistoryQuery());
-
-            return Ok(rides);
-        }
-
-        [HttpGet("rides/unpaid")]
-        public async Task<IActionResult> GetUnpaidRides()
-        {
-            var unpaidRides = await Mediator.Send(new GetUnpaidRidesQuery());
-
-            return Ok(unpaidRides);
-        }
-
         [HttpGet("payment-methods")]
         public async Task<IActionResult> GetPaymentMethods()
         {
@@ -43,28 +19,28 @@ namespace Api.Controllers
             return Ok(paymentMethods);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> OrderRide(OrderRideCommand command)
+        [HttpPost("payment-methods/add")]
+        public async Task<IActionResult> AddPaymentMethod(AddPaymentMethodCommand command)
         {
             var id = await Mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetCurrentRide), null);
+            return Ok(id);
         }
 
-        [HttpPatch("rides/{rideId}/cancel")]
-        public async Task<IActionResult> CancelRequestedRide(CancelRequestedRideCommand command)
+        [HttpPatch("payment-methods/{paymentMethodId}/set-as-default")]
+        public async Task<IActionResult> SetPaymentMethodAsDefault(SetDefaultPaymentMethodCommand command)
         {
             await Mediator.Send(command);
 
             return Ok();
         }
 
-        [HttpPatch("rides/{rideId}/pay")]
-        public async Task<IActionResult> PayForRide(PayForRideCommand command)
+        [HttpDelete("payment-methods/{paymentMethodId}/delete")]
+        public async Task<IActionResult> DeletePaymentMethod(DeletePaymentMethodCommand command)
         {
-            var paymentResult = await Mediator.Send(command);
+            await Mediator.Send(command);
 
-            return Ok(new {paymentResult});
+            return Ok();
         }
     }
 }
