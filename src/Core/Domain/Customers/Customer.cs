@@ -7,7 +7,7 @@ namespace Core.Domain.Customers
 {
     public class Customer : IAggregateRoot
     {
-        private readonly List<PaymentMethod> _paymentMethods;
+        private readonly List<PaymentMethod> _paymentMethods = null!;
 
         private Customer()
         {
@@ -20,8 +20,8 @@ namespace Core.Domain.Customers
             Id = id;
         }
 
-        public string Id { get; }
-        public IEnumerable<Ride> Rides { get; }
+        public string Id { get; } = null!;
+        public IEnumerable<Ride> Rides { get; } = null!;
 
         public IEnumerable<PaymentMethod> PaymentMethods => _paymentMethods;
 

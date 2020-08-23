@@ -20,7 +20,7 @@ namespace Core.Domain.Coupons
             SetAdmissibleUses(admissibleUses);
         }
 
-        public string Code { get; }
+        public string Code { get; } = null!;
         public decimal DiscountPercent { get; private set; }
         public int CurrentUsesCounter { get; private set; }
         public int AdmissibleUses { get; private set; }

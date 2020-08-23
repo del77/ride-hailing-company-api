@@ -32,7 +32,7 @@ namespace Core.Services
         public async Task<bool> FetchMoneyForRideAsync(Ride ride)
         {
             var paymentMethod = ride.Customer.PaymentMethods.First(pm => pm.IsDefault);
-            var paymentSuccessful = await _paymentService.FetchMoney(paymentMethod.CardId, ride.Cost.Value, ride.Cost.Currency);
+            var paymentSuccessful = await _paymentService.FetchMoney(paymentMethod.CardId, ride.Cost!.Value, ride.Cost.Currency);
 
             if (paymentSuccessful)
                 ride.MarkAsPaid();

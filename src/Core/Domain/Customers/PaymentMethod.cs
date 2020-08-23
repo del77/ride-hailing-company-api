@@ -11,10 +11,10 @@
             CustomerId = customerId;
         }
 
-        public string CardId { get; } // payments provider id
-        public string Last4 { get; }
+        public string CardId { get; } = null!; // payments provider id
+        public string Last4 { get; } = null!;
 
-        public string CustomerId { get; set; }
+        public string CustomerId { get; set; } = null!;
         public bool IsDefault { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Core.Domain.Coupons
         }
 
         public Customer Customer { get; } = null!;
-        public string CustomerId { get; }
+        public string CustomerId { get; } = null!;
 
 
         public Coupon Coupon { get; } = null!;

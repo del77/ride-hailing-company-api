@@ -23,10 +23,10 @@ namespace Core.Domain.Rides
         public string? DriverId { get; private set; }
         public Driver? Driver { get; private set; }
 
-        public string CustomerId { get; }
+        public string CustomerId { get; } = null!;
         public Customer Customer { get; } = null!;
 
-        public Node Origin { get; }
+        public Node Origin { get; } = null!;
         public Node? Destination { get; private set; }
 
         public Money? Cost { get; private set; }
@@ -37,7 +37,7 @@ namespace Core.Domain.Rides
         public RideStatus Status { get; private set; }
         public bool IsPaid { get; private set; }
 
-        public byte[] Version { get; set; }
+        public byte[] Version { get; set; } = null!;
 
         public void AssignDriver(Driver driver)
         {

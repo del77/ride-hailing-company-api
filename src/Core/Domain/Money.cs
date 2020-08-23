@@ -7,13 +7,15 @@ namespace Core.Domain
     {
         private Money() { }
         
+        public static Money Zero => new Money(Currencies.Usd, 0m);
+        
         public Money(string currency, decimal value)
         {
             Currency = currency;
             Value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
         }
 
-        public string Currency { get; }
+        public string Currency { get; } = null!;
         public decimal Value { get; }
 
         public Money DecreaseByPercent(decimal percent)

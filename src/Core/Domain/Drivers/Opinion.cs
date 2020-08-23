@@ -19,9 +19,9 @@ namespace Core.Domain.Drivers
         }
 
         public string DriverId { get; } = null!;
-        public string CustomerId { get; }
-        public Customer Customer { get; }
+        public string CustomerId { get; } = null!;
+        public Customer Customer { get; } = null!;
         public int Value { get; }
-        public string Description { get; }
+        public string? Description { get; }
     }
 }
