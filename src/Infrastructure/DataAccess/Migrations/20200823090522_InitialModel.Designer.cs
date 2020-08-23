@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.DataAccess.Migrations
 {
     [DbContext(typeof(RideHailingContext))]
-    [Migration("20200812153554_ResolveEfTypesWarnings")]
-    partial class ResolveEfTypesWarnings
+    [Migration("20200823090522_InitialModel")]
+    partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,10 +29,6 @@ namespace Infrastructure.DataAccess.Migrations
 
                     b.Property<int>("AdmissibleUses")
                         .HasColumnType("int");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CurrentUsesCounter")
                         .HasColumnType("int");
@@ -76,17 +72,12 @@ namespace Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CardId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Last4")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -111,18 +102,17 @@ namespace Infrastructure.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("DriverId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("DriverId");
 
@@ -144,6 +134,9 @@ namespace Infrastructure.DataAccess.Migrations
 
                     b.Property<string>("DriverId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -196,21 +189,6 @@ namespace Infrastructure.DataAccess.Migrations
                             b1.Property<string>("DriverId")
                                 .HasColumnType("nvarchar(450)");
 
-                            b1.Property<string>("Brand")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Model")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("RegistrationNumber")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("Seats")
-                                .HasColumnType("int");
-
                             b1.HasKey("DriverId");
 
                             b1.ToTable("Drivers");
@@ -222,6 +200,12 @@ namespace Infrastructure.DataAccess.Migrations
 
             modelBuilder.Entity("Core.Domain.Drivers.Opinion", b =>
                 {
+                    b.HasOne("Core.Domain.Customers.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Core.Domain.Drivers.Driver", null)
                         .WithMany("Opinions")
                         .HasForeignKey("DriverId")
@@ -250,10 +234,6 @@ namespace Infrastructure.DataAccess.Migrations
                             b1.Property<Guid>("RideId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
                             b1.Property<decimal>("Value")
                                 .HasColumnType("decimal(18, 2)");
 
@@ -269,10 +249,6 @@ namespace Infrastructure.DataAccess.Migrations
                         {
                             b1.Property<Guid>("RideId")
                                 .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Address")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<decimal>("Latitude")
                                 .HasColumnType("decimal(18, 2)");
@@ -292,10 +268,6 @@ namespace Infrastructure.DataAccess.Migrations
                         {
                             b1.Property<Guid>("RideId")
                                 .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Address")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<decimal>("Latitude")
                                 .HasColumnType("decimal(18, 2)");

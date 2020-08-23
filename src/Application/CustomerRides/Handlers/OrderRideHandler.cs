@@ -28,7 +28,7 @@ namespace Application.CustomerRides.Handlers
 
         public async Task<Guid> Handle(OrderRideCommand request, CancellationToken cancellationToken)
         {
-            var userId = _identityProvider.GetUserIdAsync();
+            var userId = _identityProvider.GetUserId();
             var ride = await _rideFactory.CreateRideAsync(userId, request.Address, request.Latitude, request.Longitude,
                 request.CouponCode);
 

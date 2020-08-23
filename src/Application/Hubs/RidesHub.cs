@@ -60,7 +60,7 @@ namespace Application.Hubs
         public override Task OnConnectedAsync()
         {
             Groups.AddToGroupAsync(Context.ConnectionId, _identityProvider.GetRole());
-            Groups.AddToGroupAsync(Context.ConnectionId, _identityProvider.GetUserIdAsync());
+            Groups.AddToGroupAsync(Context.ConnectionId, _identityProvider.GetUserId());
 
             return base.OnConnectedAsync();
         }

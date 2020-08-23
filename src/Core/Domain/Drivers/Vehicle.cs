@@ -4,6 +4,8 @@ namespace Core.Domain.Drivers
 {
     public class Vehicle : ValueObject<Vehicle>
     {
+        private Vehicle() { }
+        
         public Vehicle(string registrationNumber, string brand, string model, int seats)
         {
             RegistrationNumber = registrationNumber;

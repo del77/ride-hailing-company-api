@@ -2,6 +2,8 @@
 {
     public class PaymentMethod : BaseEntity
     {
+        private PaymentMethod() { }
+        
         public PaymentMethod(string cardId, string last4, string customerId)
         {
             CardId = cardId;

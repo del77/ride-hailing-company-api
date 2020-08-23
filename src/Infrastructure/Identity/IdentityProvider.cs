@@ -15,7 +15,7 @@ namespace Infrastructure.Identity
             _httpContext = httpContextAccessor.HttpContext;
         }
 
-        public string GetUserIdAsync()
+        public string GetUserId()
         {
             return _httpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
         }

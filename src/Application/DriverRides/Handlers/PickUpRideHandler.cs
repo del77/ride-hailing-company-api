@@ -27,7 +27,7 @@ namespace Application.DriverRides.Handlers
 
         protected override async Task Handle(PickUpRideCommand request, CancellationToken cancellationToken)
         {
-            var userId = _identityProvider.GetUserIdAsync();
+            var userId = _identityProvider.GetUserId();
 
             var driver = await _driversRepository.GetByIdAsync(userId);
             var ride = await _ridesRepository.GetByIdAsync(request.RideId);

@@ -5,6 +5,8 @@ namespace Core.Domain
 {
     public class Money : ValueObject<Money>
     {
+        private Money() { }
+        
         public Money(string currency, decimal value)
         {
             Currency = currency;

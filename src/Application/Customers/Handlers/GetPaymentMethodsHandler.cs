@@ -26,7 +26,7 @@ namespace Application.Customers.Handlers
         
         public async Task<IEnumerable<PaymentMethodDto>> Handle(GetPaymentMethodsQuery request, CancellationToken cancellationToken)
         {
-            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserIdAsync());
+            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserId());
 
             return _mapper.Map<IEnumerable<PaymentMethodDto>>(customer.PaymentMethods);
         }

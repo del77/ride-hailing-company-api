@@ -4,6 +4,8 @@ namespace Core.Domain.Rides
 {
     public class Node : ValueObject<Node>
     {
+        private Node() { }
+        
         public Node(string address, decimal latitude, decimal longitude)
         {
             Address = address;

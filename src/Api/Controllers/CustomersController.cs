@@ -42,5 +42,13 @@ namespace Api.Controllers
 
             return Ok();
         }
+
+        [HttpPost("opinions/add")]
+        public async Task<IActionResult> AddOpinionForDriver(AddOpinionForDriverCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
     }
 }

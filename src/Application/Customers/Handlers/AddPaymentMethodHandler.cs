@@ -28,7 +28,7 @@ namespace Application.Customers.Handlers
 
         public async Task<Guid> Handle(AddPaymentMethodCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserIdAsync());
+            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserId());
 
             var paymentMethod = _mapper.Map<PaymentMethod>(request);
             customer.AddPaymentMethod(paymentMethod);

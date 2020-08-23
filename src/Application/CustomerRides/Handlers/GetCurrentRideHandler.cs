@@ -27,7 +27,7 @@ namespace Application.CustomerRides.Handlers
 
         public async Task<RideDto> Handle(GetCurrentRideQuery request, CancellationToken cancellationToken)
         {
-            var ride = await _ridesRepository.GetCurrentCustomerRideAsync(_identityProvider.GetUserIdAsync());
+            var ride = await _ridesRepository.GetCurrentCustomerRideAsync(_identityProvider.GetUserId());
 
             if (ride is null)
                 throw new ResourceDoesNotExistException(typeof(Ride));

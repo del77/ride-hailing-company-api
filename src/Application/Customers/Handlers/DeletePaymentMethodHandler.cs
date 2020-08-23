@@ -23,7 +23,7 @@ namespace Application.Customers.Handlers
         
         protected override async Task Handle(DeletePaymentMethodCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserIdAsync());
+            var customer = await _customersRepository.GetAsync(_identityProvider.GetUserId());
 
             customer.DeletePaymentMethod(request.PaymentMethodId);
 

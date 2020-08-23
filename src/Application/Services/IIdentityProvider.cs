@@ -2,7 +2,7 @@
 {
     public interface IIdentityProvider
     {
-        string GetUserIdAsync();
+        string GetUserId();
         string GetRole();
         bool IsDriver();
         bool IsCustomer();

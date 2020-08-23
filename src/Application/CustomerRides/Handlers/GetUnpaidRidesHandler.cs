@@ -25,7 +25,7 @@ namespace Application.CustomerRides.Handlers
         
         public async Task<IEnumerable<RideDto>> Handle(GetUnpaidRidesQuery request, CancellationToken cancellationToken)
         {
-            var unpaidRides = await _customersRepository.GetUnpaidRidesAsync(_identityProvider.GetUserIdAsync());
+            var unpaidRides = await _customersRepository.GetUnpaidRidesAsync(_identityProvider.GetUserId());
 
             return _mapper.Map<IEnumerable<RideDto>>(unpaidRides);
         }
