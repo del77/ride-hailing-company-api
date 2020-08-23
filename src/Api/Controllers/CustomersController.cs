@@ -28,7 +28,7 @@ namespace Api.Controllers
         }
 
         [HttpPatch("payment-methods/{paymentMethodId}/set-as-default")]
-        public async Task<IActionResult> SetPaymentMethodAsDefault(SetDefaultPaymentMethodCommand command)
+        public async Task<IActionResult> SetPaymentMethodAsDefault([FromRoute]SetDefaultPaymentMethodCommand command)
         {
             await Mediator.Send(command);
 

@@ -20,7 +20,7 @@ namespace Api.Controllers
         }
 
         [HttpPatch("{rideId}/pick-up-ride")]
-        public async Task<IActionResult> PickUpRide(PickUpRideCommand command)
+        public async Task<IActionResult> PickUpRide([FromRoute]PickUpRideCommand command)
         {
             await Mediator.Send(command);
 

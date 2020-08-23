@@ -2,6 +2,7 @@
 using System.Text;
 using Application.Services;
 using AutoMapper;
+using Core.Factories;
 using Core.Interfaces;
 using Core.Repositories;
 using Core.Services;
@@ -29,6 +30,8 @@ namespace Api.Extensions
             services.AddScoped<ICouponsRepository, CouponsRepository>();
             services.AddScoped<IDriversRepository, DriversRepository>();
             services.AddScoped<ICustomersRepository, CustomersRepository>();
+
+            services.AddScoped<IRideFactory, RideFactory>();
             
             services.AddScoped<IPaymentService, SomePaymentService>();
         }

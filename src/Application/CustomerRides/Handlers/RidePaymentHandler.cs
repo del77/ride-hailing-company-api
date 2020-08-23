@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.CustomerRides.Commands;
 using Application.Services;
 using Core.Repositories;
 using Core.Services;

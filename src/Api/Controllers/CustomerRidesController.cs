@@ -46,7 +46,7 @@ namespace Api.Controllers
         }
 
         [HttpPatch("{rideId}/cancel")]
-        public async Task<IActionResult> CancelRequestedRide(CancelRequestedRideCommand command)
+        public async Task<IActionResult> CancelRequestedRide([FromRoute]CancelRequestedRideCommand command)
         {
             await Mediator.Send(command);
 
@@ -54,7 +54,7 @@ namespace Api.Controllers
         }
 
         [HttpPatch("{rideId}/pay")]
-        public async Task<IActionResult> PayForRide(PayForRideCommand command)
+        public async Task<IActionResult> PayForRide([FromRoute]PayForRideCommand command)
         {
             var paymentResult = await Mediator.Send(command);
 
