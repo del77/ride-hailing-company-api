@@ -1,7 +1,7 @@
 ﻿using Application.Services;
 using Core.Domain;
 
-namespace IntegrationTests
+namespace IntegrationTests.Config
 {
     public class FakeIdentityProvider : IIdentityProvider
     {

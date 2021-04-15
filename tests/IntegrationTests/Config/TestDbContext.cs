@@ -4,8 +4,7 @@ using Core.Domain.Drivers;
 using Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-
-namespace IntegrationTests
+namespace IntegrationTests.Config
 {
     public class InMemoryDatabase
     {

@@ -25,8 +25,8 @@ namespace Application.Customers.Handlers
         {
             var driver = await _driversRepository.GetByIdAsync(request.DriverId);
 
-            // driver.AddOpinion(request.Value, request.Description, _identityProvider.GetUserId());
-            // await _unitOfWork.SaveAsync();
+            driver.AddOpinion(request.Value, request.Description, _identityProvider.GetUserId());
+            await _unitOfWork.SaveAsync();
         }
     }
 }
