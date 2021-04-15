@@ -14,10 +14,10 @@ namespace Core.Domain.Drivers
             Seats = seats;
         }
 
-        public string Brand { get; } = null!;
-        public string Model { get; } = null!;
+        public string Brand { get; }
+        public string Model { get; }
         public int Seats { get; }
-        public string RegistrationNumber { get; } = null!;
+        public string RegistrationNumber { get; } 
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

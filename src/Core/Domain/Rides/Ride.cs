@@ -12,7 +12,7 @@ namespace Core.Domain.Rides
         {
         }
 
-        public Ride(string customerId, string address, decimal originLatitude, decimal originLongitude, Coupon? coupon)
+        public Ride(string customerId, string address, decimal originLatitude, decimal originLongitude, Coupon coupon)
         {
             CustomerId = customerId;
             Origin = new Node(address, originLatitude, originLongitude);
@@ -20,19 +20,19 @@ namespace Core.Domain.Rides
             coupon?.Use(customerId);
         }
 
-        public string? DriverId { get; private set; }
-        public Driver? Driver { get; private set; }
+        public string DriverId { get; private set; }
+        public Driver Driver { get; private set; }
 
         public string CustomerId { get; } = null!;
         public Customer Customer { get; } = null!;
 
         public Node Origin { get; } = null!;
-        public Node? Destination { get; private set; }
+        public Node Destination { get; private set; }
 
-        public Money? Cost { get; private set; }
+        public Money Cost { get; private set; }
 
         public Guid? CouponId { get; private set; }
-        public Coupon? Coupon { get; private set; }
+        public Coupon Coupon { get; private set; }
 
         public RideStatus Status { get; private set; }
         public bool IsPaid { get; private set; }
@@ -42,10 +42,14 @@ namespace Core.Domain.Rides
         public void AssignDriver(Driver driver)
         {
             if (!driver.IsAvailable)
+            {
                 throw new DriverUnavailableException(driver.Id);
+            }
 
             if (Status != RideStatus.Requested)
+            {
                 throw new InvalidRideStatusException(Status, Id);
+            }
 
             Driver = driver;
             Status = RideStatus.Accepted;
@@ -54,7 +58,9 @@ namespace Core.Domain.Rides
         public void Cancel()
         {
             if (Status != RideStatus.Accepted)
-                throw new Exception();
+            {
+                throw new CantCancelUnacceptedRideException(Id);
+            }
 
             Status = RideStatus.Canceled;
         }
@@ -71,7 +77,9 @@ namespace Core.Domain.Rides
         public void FinishRide(decimal lengthInKilometers, Money pricePerKilometer)
         {
             if(Status != RideStatus.InProgress)
+            {
                 throw new InvalidRideStatusException(Status, Id);
+            }
             
             Status = RideStatus.Finished;
             Cost = CalculateCost(lengthInKilometers, pricePerKilometer);
@@ -80,7 +88,9 @@ namespace Core.Domain.Rides
         public void MarkAsPaid()
         {
             if (Status != RideStatus.Finished)
+            {
                 throw new InvalidRideStatusException(Status, Id);
+            }
 
             IsPaid = true;
         }
@@ -90,7 +100,9 @@ namespace Core.Domain.Rides
             var calculatedCost = new Money(pricePerKilometer.Currency, lengthInKilometers * pricePerKilometer.Value);
 
             if (Coupon != null)
+            {
                 calculatedCost.DecreaseByPercent(Coupon.DiscountPercent);
+            }
 
             return calculatedCost;
         }

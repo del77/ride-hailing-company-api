@@ -13,7 +13,7 @@ namespace Core.Domain.Rides
             Longitude = longitude;
         }
 
-        public string Address { get; } = null!;
+        public string Address { get; }
         public decimal Latitude { get; }
         public decimal Longitude { get; }
 
