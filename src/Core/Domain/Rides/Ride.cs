@@ -6,7 +6,7 @@ using Core.Exceptions;
 
 namespace Core.Domain.Rides
 {
-    public class Ride : BaseEntity, IAggregateRoot
+    public class Ride : Entity, IAggregateRoot
     {
         private Ride()
         {

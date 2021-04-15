@@ -4,7 +4,7 @@ using Core.Exceptions;
 
 namespace Core.Domain.Drivers
 {
-    public class Opinion : BaseEntity
+    public class Opinion : Entity
     {
         private Opinion() { }
         

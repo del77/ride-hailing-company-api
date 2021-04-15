@@ -1,6 +1,6 @@
 ﻿namespace Core.Domain.Customers
 {
-    public class PaymentMethod : BaseEntity
+    public class PaymentMethod : Entity
     {
         private PaymentMethod() { }
         

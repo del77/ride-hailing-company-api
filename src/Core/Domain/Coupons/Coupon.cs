@@ -5,11 +5,13 @@ using Core.Exceptions;
 
 namespace Core.Domain.Coupons
 {
-    public class Coupon : BaseEntity, IAggregateRoot
+    public class Coupon : Entity, IAggregateRoot
     {
+        private readonly HashSet<CouponCustomer> _couponUsers;
+
         private Coupon()
         {
-            CouponUsers = new List<CouponCustomer>();
+            _couponUsers = new HashSet<CouponCustomer>();
         }
 
         public Coupon(string code, decimal discountPercent, int currentUsesCounter, int admissibleUses) : this()
@@ -20,22 +22,27 @@ namespace Core.Domain.Coupons
             SetAdmissibleUses(admissibleUses);
         }
 
-        public string Code { get; } = null!;
+        public string Code { get; private set; }
         public decimal DiscountPercent { get; private set; }
         public int CurrentUsesCounter { get; private set; }
         public int AdmissibleUses { get; private set; }
-        public ICollection<CouponCustomer> CouponUsers { get; }
+
+        public IReadOnlyCollection<CouponCustomer> CouponUsers => _couponUsers;
 
         public void Use(string customerId)
         {
             if (IsUsesQuotaReached)
+            {
                 throw new CouponAdmissibleUsesCountReachedException(Id, AdmissibleUses);
+            }
             
             if(IsCouponAlreadyUsedByCustomer(customerId))
+            {
                 throw new CouponAlreadyUsedByCustomerException(customerId, Id);
+            }
 
             CurrentUsesCounter += 1;
-            CouponUsers.Add(new CouponCustomer(customerId));
+            _couponUsers.Add(new CouponCustomer(customerId));
         }
 
         public bool CanBeUsed(string customerId)
@@ -57,7 +64,9 @@ namespace Core.Domain.Coupons
         private void SetCurrentUsesCounter(int currentUsesCounter)
         {
             if (currentUsesCounter < 0)
-                throw new Exception();
+            {
+                throw new CurrentUsesNegativeException(Id);
+            }
 
             CurrentUsesCounter = currentUsesCounter;
         }
@@ -65,7 +74,7 @@ namespace Core.Domain.Coupons
         private void SetDiscountPercent(decimal discountPercent)
         {
             if (discountPercent <= 0 || discountPercent > 100)
-                throw new Exception();
+                throw new ProvidedDiscountIsNegativeException(Id);
 
             DiscountPercent = discountPercent;
         }
@@ -73,7 +82,7 @@ namespace Core.Domain.Coupons
         private void SetAdmissibleUses(int admissibleUses)
         {
             if (admissibleUses <= 0)
-                throw new Exception();
+                throw new CouponAdmissibleUsesCountReachedException(Id, admissibleUses);
 
             AdmissibleUses = admissibleUses;
         }

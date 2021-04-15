@@ -7,12 +7,12 @@ namespace Core.Domain.Customers
 {
     public class Customer : IAggregateRoot
     {
-        private readonly List<PaymentMethod> _paymentMethods = null!;
+        private readonly HashSet<PaymentMethod> _paymentMethods;
 
         private Customer()
         {
             Rides = new List<Ride>();
-            _paymentMethods = new List<PaymentMethod>();
+            _paymentMethods = new HashSet<PaymentMethod>();
         }
 
         public Customer(string id)
