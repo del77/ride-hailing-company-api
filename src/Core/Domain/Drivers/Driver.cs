@@ -28,11 +28,13 @@ namespace Core.Domain.Drivers
         public Vehicle Vehicle { get; private set; }
         public bool IsAvailable => Rides.All(r => r.Status != RideStatus.Accepted && r.Status != RideStatus.InProgress);
 
-        public void AddOpinion(in int value, string description, string customerId)
+        public void AddOpinion(int value, string description, string customerId)
         {
             var isAlreadyRatedByUser = Opinions.Any(o => o.CustomerId == customerId);
             if (isAlreadyRatedByUser)
+            {
                 throw new AlreadyRatedException(Id, customerId);
+            }
             
             var opinion = new Opinion(value, description, customerId);
             _opinions.Add(opinion);

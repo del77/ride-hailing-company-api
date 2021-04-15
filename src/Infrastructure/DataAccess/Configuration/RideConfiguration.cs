@@ -39,8 +39,8 @@ namespace Infrastructure.DataAccess.Configuration
             builder.Property(r => r.Status)
                 .IsRequired();
 
-            builder.Property(r => r.Version)
-                .IsRowVersion();
+          //  builder.Property(r => r.Version)
+                //.IsRowVersion();
         }
     }
 }

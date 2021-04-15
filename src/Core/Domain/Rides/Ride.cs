@@ -10,6 +10,7 @@ namespace Core.Domain.Rides
     {
         private Ride()
         {
+            Version = new byte[] {};
         }
 
         public Ride(string customerId, string address, decimal originLatitude, decimal originLongitude, Coupon coupon)
@@ -37,7 +38,7 @@ namespace Core.Domain.Rides
         public RideStatus Status { get; private set; }
         public bool IsPaid { get; private set; }
 
-        public byte[] Version { get; set; } = null!;
+        public byte[] Version { get; set; }
 
         public void AssignDriver(Driver driver)
         {
